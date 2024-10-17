@@ -27,7 +27,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "Components/cuba.js",
-    "Components/capsules.js"
+    "Components/capsules.js",
+    "app/page.js"
   ],
   "exclude": ["node_modules"]
 }

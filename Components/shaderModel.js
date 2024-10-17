@@ -3,97 +3,14 @@
 // import { Box, OrbitControls } from "@react-three/drei"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-import { useCallback, useEffect, useState } from "react"
+import { useEffect } from "react"
 import * as THREE from "three"
-
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js"
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js"
-import { GlitchPass } from "three/addons/postprocessing/GlitchPass.js"
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js"
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
-import {
-  CSS2DObject,
-  CSS2DRenderer,
-} from "three/addons/renderers/CSS2DRenderer.js"
-import ParticleModule from "./particleModule"
-import { mx_fractal_noise_vec3, normalWorld, timerLocal } from "three/tsl"
 
 // import spotlightAud from ""
 
 const ShaderdModel = () => {
-  const [alterText, setAlterText] = useState("")
-  const [value, setValue] = useState(false)
-
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const vertexShaderOne = `
-  
-precision mediump float;
-
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-
-`
-      const vertexShaderTwo = `
-uniform float timeR;
-
-void main() {
-  float wave = sin(position.x * 5.0 + timeR) * 0.2;
-
-  vec3 newPosition = vec3(position.x, position.y + wave, position.z);
-
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-}
-
-`
-
-      const fragmentShaderOne = `
-  precision mediump float;
-    
-  uniform float time;
-
-    void main() {
-        vec3 color = vec3(
-            sin(time * 2.0),         // Red channel
-            sin(time * 2.0 + 2.0),   // Green channel
-            sin(time * 2.0 + 4.0)    // Blue channel
-        );
-
-        // Adjust the sine wave range from [-1.0, 1.0] to [0.0, 1.0]
-        color = (color + 1.0) * 0.5;
-
-        gl_FragColor = vec4(color, 1.0);  // Set the color and full opacity
-    }
-`
-      // scene.rotation
-      const vertexShaderThree = `
-precision mediump float;
-uniform float time;
-varying vec2 vUv;
-
-void main() {
-    float wave = sin(position.x * 1.0  + time  ) * 0.1;  
-    vec3 newPosition = vec3( position.x + wave , position.y + wave   ,  position.z);  
-
-    vUv = uv;  
-
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-}
-`
-
-      // Fragment shader that samples the texture
-      const fragmentShaderThree = `
-precision mediump float;
-
-uniform sampler2D texture1; 
-varying vec2 vUv;          
-void main() {
-    vec4 texColor = texture(texture1, vUv); 
-    gl_FragColor = vec4(texColor);
-}
-
-`
       const vertexShader = `
     precision mediump float;
     uniform float time;
@@ -147,7 +64,6 @@ void main() {
       const group = new THREE.Group()
 
       const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-      //   const camera = new THREE.OrthographicCamera(0.05, 10, 10, -0.5, 0.1)
       camera.position.z = 4
       const renderer = new THREE.WebGLRenderer({ antialias: true })
       renderer.setSize(width, height)
@@ -248,10 +164,6 @@ void main() {
           sunMaterial.uniforms.time.value = time * 0.005 // Time in seconds
           // sunMaterial.uniforms.timeR.value = time * 0.001 // Time in seconds
         }
-        // for (let i = 0; i < group.children.length; i++) {
-        //   const child = group.children[i]
-        //   child.rotation.y += 0.005
-        // }
 
         controls.update()
         renderer.render(scene, camera)

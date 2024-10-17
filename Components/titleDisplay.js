@@ -3,23 +3,18 @@
 // import { Box, OrbitControls } from "@react-three/drei"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import * as THREE from "three"
 
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js"
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js"
-import { GlitchPass } from "three/addons/postprocessing/GlitchPass.js"
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import {
   CSS2DObject,
   CSS2DRenderer,
 } from "three/addons/renderers/CSS2DRenderer.js"
-import ParticleModule from "./particleModule"
 
 const TitleDisplay = () => {
   const [alterText, setAlterText] = useState("")
-  const [value, setValue] = useState(false)
+  // const [value, setValue] = useState(false)
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -155,11 +150,11 @@ const TitleDisplay = () => {
       spotLightGreen.shadow.camera.far = 10
       spotLightGreen.shadow.focus = 1
 
-      const lightHelper = new THREE.SpotLightHelper(spotLightRed)
-      const lightHelperG = new THREE.SpotLightHelper(spotLightGreen)
+      // const lightHelper = new THREE.SpotLightHelper(spotLightRed)
+      // const lightHelperG = new THREE.SpotLightHelper(spotLightGreen)
 
       //   group.add(lightHelper, lightHelperG)
-      const hemisphere = new THREE.HemisphereLight("purple", "green", 2)
+      // const hemisphere = new THREE.HemisphereLight("purple", "green", 2)
       //   group.add(hemisphere)
       scene.background = new THREE.Color().setHSL(
         0.821,
@@ -167,7 +162,7 @@ const TitleDisplay = () => {
         0.05,
         THREE.SRGBColorSpace
       )
-      const ambient = new THREE.AmbientLight(0xffffff, 0x8d8d8d, 0.15)
+      // const ambient = new THREE.AmbientLight(0xffffff, 0x8d8d8d, 0.15)
       //   group.add(ambient)
       //   const ambientLight = new THREE.AmbientLight("red", 5)
       //   ambientLight.position.z = -12
@@ -246,12 +241,6 @@ const TitleDisplay = () => {
       animate()
     }
   }, [])
-
-  // useEffect(() => {
-  //     if (typeof window !== "undefined") {
-  //         audioBox("./sounds/spot.mp3")
-  //     }
-  // }, [])
 
   return (
     <div className="bg-red-800 absolute top-52   ">

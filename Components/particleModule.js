@@ -1,15 +1,9 @@
 "use client"
 
-// import { Box, OrbitControls } from "@react-three/drei"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js"
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js"
-import { GlitchPass } from "three/addons/postprocessing/GlitchPass.js"
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js"
 
 const ParticleModule = () => {
   useEffect(() => {
@@ -17,7 +11,6 @@ const ParticleModule = () => {
       const width = window.innerWidth
       const height = window.innerHeight
       const canvas = document.createElement("canvas")
-      const ctx = canvas.getContext("2d")
       canvas.height = height
       canvas.width = width
 
@@ -67,7 +60,7 @@ const ParticleModule = () => {
       const lathMovement = () => {
         let posX = Math.sin(time.getElapsedTime()) * Math.PI * 0.2
         let posY = Math.cos(time.getElapsedTime())
-        let posZ = Math.cos(time.getElapsedTime()) * Math.PI * 0.2
+        // let posZ = Math.cos(time.getElapsedTime()) * Math.PI * 0.2
         lathe.rotation.y += 0.001
         lathe.rotation.x += 0.02
 

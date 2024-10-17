@@ -1,12 +1,12 @@
 "use client"
 
-import CubeTemplate from "@/Components/cubeTemplate"
-import ParticleModule from "@/Components/particleModule"
-import TitleDisplay from "@/Components/titleDisplay"
-import AnimatedModel from "@/Components/animatedModel"
+// import CubeTemplate from "@/Components/cubeTemplate"
+// import ParticleModule from "@/Components/particleModule"
+// import TitleDisplay from "@/Components/titleDisplay"
+// import AnimatedModel from "@/Components/animatedModel"
 import ShaderdModel from "@/Components/shaderModel"
 
-import React, { Suspense, useEffect, useRef, useState } from "react"
+import React from "react"
 
 export default function Home() {
   return (

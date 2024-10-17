@@ -45,3 +45,10 @@
   /* <h1 className="text-6xl font">{alterText}</h1>
       <h1 className="text-6xl font">{delayText}</h1> */
 }
+import React from "react"
+
+const page = () => {
+  return <div>page</div>
+}
+
+export default page
