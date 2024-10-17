@@ -20,7 +20,7 @@ const CubeTemplate = () => {
       document.body.appendChild(renderer.domElement)
       renderer.setClearColor(0x00ff00)
 
-      const geometry = new THREE.LatheGeometry()
+      const geometry = new THREE.TorusGeometry()
       const material = new THREE.MeshNormalMaterial({
         // wireframe: true,
         side: THREE.DoubleSide,

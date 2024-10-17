@@ -15,8 +15,7 @@ import {
   CSS2DObject,
   CSS2DRenderer,
 } from "three/addons/renderers/CSS2DRenderer.js"
-
-// import spotlightAud from ""
+import ParticleModule from "./particleModule"
 
 const TitleDisplay = () => {
   const [alterText, setAlterText] = useState("")
@@ -30,7 +29,7 @@ const TitleDisplay = () => {
       canvas.height = height
       canvas.width = width
       const scene = new THREE.Scene()
-
+      const group = new THREE.Group()
       const htmlRenderer = new CSS2DRenderer()
 
       htmlRenderer.setSize(width, height)
@@ -46,7 +45,7 @@ const TitleDisplay = () => {
       lightsOnBtnDiv.textContent = "click to switch on the lights"
       //   lightsOnBtnDiv.style.cursor = "pointer"
 
-      scene.add(btnHtmlHelper)
+      group.add(btnHtmlHelper)
 
       const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 1000)
       camera.position.z = 4
@@ -60,7 +59,7 @@ const TitleDisplay = () => {
       const gltfLoader = new GLTFLoader()
 
       gltfLoader.load("./model/base_basic_pbr.glb", (gltf) =>
-        scene.add(gltf.scene.children[0])
+        group.add(gltf.scene.children[0])
       )
       //   console.log(gltfLoader)
 
@@ -110,14 +109,14 @@ const TitleDisplay = () => {
       pointLightBox.position.x = 4
       pointLightBox.position.z = 4
 
-      scene.add(bulb_right)
-      scene.add(bulb_left)
+      group.add(bulb_right)
+      group.add(bulb_left)
 
       const plane = new THREE.Mesh(planeGeometry, planeMaterial)
       plane.rotation.x = -4
       plane.position.y = -2
 
-      scene.add(plane)
+      group.add(plane)
 
       const controls = new OrbitControls(camera, renderer.domElement)
 
@@ -159,9 +158,9 @@ const TitleDisplay = () => {
       const lightHelper = new THREE.SpotLightHelper(spotLightRed)
       const lightHelperG = new THREE.SpotLightHelper(spotLightGreen)
 
-      //   scene.add(lightHelper, lightHelperG)
+      //   group.add(lightHelper, lightHelperG)
       const hemisphere = new THREE.HemisphereLight("purple", "green", 2)
-      //   scene.add(hemisphere)
+      //   group.add(hemisphere)
       scene.background = new THREE.Color().setHSL(
         0.821,
         0.9,
@@ -169,14 +168,14 @@ const TitleDisplay = () => {
         THREE.SRGBColorSpace
       )
       const ambient = new THREE.AmbientLight(0xffffff, 0x8d8d8d, 0.15)
-      //   scene.add(ambient)
+      //   group.add(ambient)
       //   const ambientLight = new THREE.AmbientLight("red", 5)
       //   ambientLight.position.z = -12
 
       //   plane.add(spotlight)
 
       //   ambientLight.position.z = -12
-      //   scene.add(pointLight)
+      //   group.add(pointLight)
       controls.enablePan = false
       controls.enableZoom = false
       const scramble = (textArg) => {
@@ -220,9 +219,25 @@ const TitleDisplay = () => {
         renderer.setSize(width, height)
         htmlRenderer.setSize(width, height)
       })
+
+      scene.add(group)
+      // scene.add(<ParticleModule />)
+
+      // scene.add(a)
+      // setTimeout(() => , 7000)
+
+      const introMovement = () => {
+        group.position.z += 0.01
+      }
+
       const animate = () => {
         requestAnimationFrame(animate)
         controls.update()
+        if (!sound.isPlaying) {
+          setTimeout(() => {
+            introMovement()
+          }, 7000)
+        }
         // addItems().update()
         htmlRenderer.render(scene, camera)
         renderer.render(scene, camera)

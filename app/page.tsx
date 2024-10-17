@@ -3,19 +3,21 @@
 import CubeTemplate from "@/Components/cubeTemplate"
 import ParticleModule from "@/Components/particleModule"
 import TitleDisplay from "@/Components/titleDisplay"
+import AnimatedModel from "@/Components/animatedModel"
+import ShaderdModel from "@/Components/shaderModel"
 
-import { useEffect, useRef, useState } from "react"
+import React, { Suspense, useEffect, useRef, useState } from "react"
 
 export default function Home() {
-  // let player = new Audio("./sounds/spot.mp3")
-  // player.play()
-
   return (
     <div className="">
+      {/* <h1>asdasd</h1> */}
+      {/* <ParticleModule /> */}
       {/* <Table /> */}
       {/* <CubeTemplate /> */}
-      <TitleDisplay />
-      {/* <ParticleModule /> */}
+      {/* <TitleDisplay /> */}
+      {/* <AnimatedModel /> */}
+      <ShaderdModel />
     </div>
   )
 }
