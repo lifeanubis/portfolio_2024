@@ -5,6 +5,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
+import { sunGeometry, sunMesh } from "./earthScene"
 
 // import spotlightAud from ""
 
@@ -100,7 +101,6 @@ const ShaderdModel = () => {
         // texture.wrapS = texture.wrapT = THREE.WrapAroundEnding
 
         let sunMesh = new THREE.Mesh(sunGeometry, sunMaterial)
-        // sunMesh.position.set(0, -1, -1)
         group.add(sunMesh)
       })
       textureLoader.load("./model/sun/sun_texture.jpg", function name(texture) {
@@ -172,8 +172,6 @@ const ShaderdModel = () => {
       animate()
     }
   }, [])
-
-  return <div className="bg-red-800 absolute top-52   "></div>
 }
 
 export default ShaderdModel
