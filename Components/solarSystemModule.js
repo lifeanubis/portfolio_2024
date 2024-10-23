@@ -7,9 +7,7 @@ import * as THREE from "three"
 import { latheR } from "./textExport"
 import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
 import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
-import { CameraControls } from "@react-three/drei"
-import { FlyControls } from "three/addons/controls/FlyControls.js"
-// import { CameraControls } from "three/addons/controls/"
+import gsap from "gsap"
 
 const SolarSystemModule = () => {
   useEffect(() => {
@@ -19,19 +17,23 @@ const SolarSystemModule = () => {
       const canvas = document.createElement("canvas")
       canvas.height = height
       canvas.width = width
+      let cam_posx = 0
+      let cam_posy = 0
+      let cam_posz = 2
 
       const scene = new THREE.Scene()
       const group = new THREE.Group()
       const textureLoader = new THREE.TextureLoader()
 
       const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-      camera.position.z = 4
       const renderer = new THREE.WebGLRenderer()
       renderer.setSize(width, height)
+      camera.position.z = 4
+      // set(cam_posx, cam_posy, cam_posz)
 
       document.body.appendChild(renderer.domElement)
 
-      const LatheGeometry = new THREE.SphereGeometry()
+      const LatheGeometry = new THREE.BoxGeometry(5, 1, 1)
       const Lathematerial = new THREE.MeshStandardMaterial({
         // wireframe: true,
         // emissive: "red",
@@ -40,18 +42,12 @@ const SolarSystemModule = () => {
       })
       const controls = new OrbitControls(camera, renderer.domElement)
 
-      const flyControls = new FlyControls(camera, renderer.domElement)
-
-      // const CameraControl =  CameraControls(camera, renderer.domElement)
-      // console.log(CameraControl, "CameraControl--------------------")
-
-      // cameraControls.addEventListener("change", renderer) 0xff9000
       const pointLight = new THREE.PointLight(0xff09107, 15, 30, 1)
       const pointLightStar = new THREE.PointLight("cyan", 15, 10, 0)
       const starLight = new THREE.PointLight("green", 15, 10, 0)
 
-      const hemisphere = new THREE.HemisphereLight("purple", "green", 2)
-      // scene.add(hemisphere)
+      const ambientLight = new THREE.DirectionalLight("white", 5.0)
+
       scene.background = new THREE.Color().setHSL(
         0.821,
         0.9,
@@ -61,7 +57,7 @@ const SolarSystemModule = () => {
       // const ambientLight = new THREE.AmbientLight("white", 5)
       // scene.add(ambientLight)
       // ambientLight.position.z = -12
-      group.add(pointLight)
+      // group.add(pointLight)
 
       textureLoader.load(
         "./model/galaxy/galaxy_texture.jpg",
@@ -76,15 +72,33 @@ const SolarSystemModule = () => {
       // lathe.add(pointLightStar)
       // lathe.add(pointLight)
       // scene.add(pointLight)
-      // scene.add(latheR)
-      earthMesh.add(pointLight)
-      // if (earthMaterial && earthGeometry && earthMesh) {
-      group.add(earthMesh)
-      // earthMesh.scale(5, 5)
-      earthMesh.position.set(-50, 0, -50)
-      group.add(sunMesh)
-      scene.add(group)
+      let mars = earthMesh.clone()
+      let saturn = earthMesh.clone()
 
+      group.add(mars)
+      group.add(saturn)
+
+      group.add(lathe)
+      // earthMesh.add(pointLight)
+      // if (earthMaterial && earthGeometry && earthMesh) {
+      group.add(sunMesh)
+      group.add(earthMesh)
+      lathe.position.set(0, 0, 0)
+
+      mars.position.set(-25, 0, -15)
+      saturn.position.set(-25, 0, 15)
+      ambientLight.position.set(-25, 0, 0)
+      // group.children[0].add(ambientLight)
+      group.add(ambientLight)
+
+      sunMesh.position.set(0, 0, 4)
+      earthMesh.position.set(-15, 0, 0)
+
+      const axisHelper = new THREE.AxesHelper(20)
+
+      scene.add(axisHelper)
+
+      scene.add(group)
       // }
 
       // pointLightStar.add(lathe)
@@ -96,54 +110,53 @@ const SolarSystemModule = () => {
       const lathMovement = () => {
         let posX = Math.sin(time.getElapsedTime()) * Math.PI * 0.2
         let posY = Math.cos(time.getElapsedTime())
-        // let posZ = Math.cos(time.getElapsedTime()) * Math.PI * 0.2
-        // lathe.rotation.y += 0.001
-        // lathe.rotation.x += 0.02
 
-        // earthMesh.rotation.y += 0.01
         earthMesh.rotation.y = planetRotation += 0.001
-
-        // lathe.position.x = posX
-        // lathe.position.y = posY
 
         pointLightStar.position.set(posX, posY, -4)
         pointLight.position.set(posX, posY, 5)
       }
 
       const sunMovement = (time) => {
-        // let posX = Math.sin(clock.getElapsedTime()) * Math.PI * 0.2
-        // let posY = Math.sin(clock.getElapsedTime()) * Math.PI * 0.2
-        // group.rotation.x = posZ += 0.001
-        // group.rotation.y = posZ += 0.001
-        // camera.lookAt(planeMesh)
-        // group.children[1].rotation.x = posZ += 0.01
         sunMesh.rotation.y = planetRotation += 0.0005
         sunMaterial.uniforms.time.value = time * 0.005
       }
+
+      const timeLine = gsap.timeline()
+
+      const camControlls = () => {
+        timeLine
+          .to(camera.position, {
+            x: earthMesh.position.x - 2,
+            duration: 4,
+            onUpdate: () => camera.lookAt(sunMesh.position),
+          })
+          .to(camera.position, {
+            x: mars.position.x - 4,
+            duration: 4,
+            // onUpdate: () => camera.lookAt(earthMesh.position),
+          })
+          .to(camera.position, {
+            z: mars.position.z,
+            duration: 4,
+            // onUpdate: () => camera.lookAt(mars.position),
+          })
+          .to(camera.position, {
+            z: 16,
+            duration: 4,
+            // onUpdate: () => camera.lookAt(sunMesh.position),
+          })
+      }
+
+      controls.enableDamping = true
+      controls.dampingFactor = 0.009
+
+      camControlls()
       const animate = (time) => {
         requestAnimationFrame(animate)
         lathMovement()
         sunMovement(time)
-        // earthMaterial.uniforms.timeR.value = time * 0.001 // Time in seconds
-        if (group.position.z <= 20) {
-          // group.position.z = posZ += 0.1
-        }
-        // if (group.position.z === 10) {
-        // camera.rotation.x = cam_posZ += 0.01
-        // }
-        // console.log(
-        //   group.position.x,
-        //   group.position.y,
-        //   group.position.z,
-        //   "--------------------"
-        // )
-
-        // if (group.position.z >= 50) {
-        //   // scene.rotation.x = cam_posZ -= 0.1
-        //   // group.position.x = posZ += 0.1
-        // }
-        flyControls.update(0.52)
-        // addItems().update()
+        controls.update()
         renderer.render(scene, camera)
       }
 

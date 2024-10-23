@@ -25,8 +25,8 @@ export default function Home() {
   if (typeof window !== "undefined") {
     return (
       <div className="">
-        {/* <SolarSystemModul e /> */}
-        <CameraTestModule />
+        <SolarSystemModule />
+        {/* <CameraTestModule /> */}
 
         {/* <h1>asdasd</h1> */}
         {/* <ParticleModule /> */}

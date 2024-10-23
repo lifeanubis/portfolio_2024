@@ -3,6 +3,7 @@
 import * as THREE from "three"
 
 let earthGeometry, earthMaterial, earthMesh
+
 const vertexShader = `
 precision mediump float;
 uniform float time;
@@ -50,7 +51,6 @@ void main() {
 //
 
 const textureLoader = new THREE.TextureLoader()
-const ambientLight = new THREE.AmbientLight("white", 5)
 textureLoader.load("./model/earth/earth_day.jpg", (texture) => {
   earthGeometry = new THREE.IcosahedronGeometry(2, 50)
   earthMaterial = new THREE.MeshStandardMaterial({
@@ -58,23 +58,7 @@ textureLoader.load("./model/earth/earth_day.jpg", (texture) => {
     bumpMap: texture,
     bumpScale: 20,
     map: texture,
-    // wireframeLinewidth: 0.5,
-    // vertexColors: true,
-    // vertexShader: vertexShader,
-    // vertexShader: vertexShader,
-    // fragmentShader: fragmentShader,
-    // uniforms: {
-    //   time: { value: 0.0 },
-    // timeR: { value: 0.0 },
-    //   texture1: { value: texture },
-
-    // Initialize the time uniform
-    // color: { value: new THREE.Vector4(1.0, 0.5, 1.0, 1.0) }, // Green color
-    // },
   })
   earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
-  //   earthMesh.add(ambientLight)
 })
 export { earthMesh, earthMaterial, earthGeometry }
-
-// animate()

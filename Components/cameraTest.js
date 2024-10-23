@@ -111,7 +111,7 @@ const CameraTestmModule = () => {
 
       const timeLine = gsap.timeline()
 
-      const camControlls = (second) => {
+      const camControlls = () => {
         timeLine
           .to(camera.position, {
             y: -4,
@@ -126,9 +126,9 @@ const CameraTestmModule = () => {
           })
           .to(camera.position, {
             z: 4,
-            x: -15,
+            x: box2Mesh.position.x,
             duration: 4,
-            // onUpdate: () => camera.lookAt(box2Mesh.position),
+            onUpdate: () => camera.lookAt(box2Mesh.position),
           })
 
         // timeLine.progress(1)
