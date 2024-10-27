@@ -1,7 +1,7 @@
 "use client"
 
-// import CubeTemplate from "@/Components/cubeTemplate"
-// import ParticleModule from "@/Components/particleModule"
+import CubeTemplate from "@/Components/cubeTemplate"
+import ParticleModule from "@/Components/particleModule"
 // import TitleDisplay from "@/Components/titleDisplay"
 // import AnimatedModel from "@/Components/animatedModel"
 import ShaderdModel from "@/Components/shaderModel"
@@ -18,6 +18,10 @@ const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
   ssr: false,
 })
 
+const PhysicsModule = dynamic(() => import("@/Components/physicsModule"), {
+  ssr: false,
+})
+
 import React from "react"
 
 export default function Home() {
@@ -25,7 +29,9 @@ export default function Home() {
   if (typeof window !== "undefined") {
     return (
       <div className="">
-        <SolarSystemModule />
+        {/* <SolarSystemModule /> */}
+        <PhysicsModule />
+
         {/* <CameraTestModule /> */}
 
         {/* <h1>asdasd</h1> */}
