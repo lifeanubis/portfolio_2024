@@ -75,7 +75,7 @@ const PhysicsmModule = () => {
       const Box2Geometry = new THREE.IcosahedronGeometry(2, 1)
       const Box2material = new THREE.MeshStandardMaterial({
         // wireframe: true,
-        color: "cyan",
+        // color: "cyan",
       })
       const box2Mesh = new THREE.Mesh(Box2Geometry, Box2material)
 
@@ -86,7 +86,7 @@ const PhysicsmModule = () => {
       // boxBody.velocity.set(25, -25, 0)
       //   return world.addBody(boxBody)
       // }
-      const pointLight = new THREE.PointLight("orange", 15, 5, 0)
+      const pointLight = new THREE.DirectionalLight("white", 1)
       const pointLightBig = new THREE.PointLight("yellow", 15, 0, 0)
 
       // group.add(box2Mesh)
@@ -102,11 +102,7 @@ const PhysicsmModule = () => {
       })
       const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
 
-      sphereMesh.add(pointLightBig)
-
-      pointLight.position.z = sphereMesh.position.z
-      pointLight.position.x = sphereMesh.position.x
-      pointLight.position.y = sphereMesh.position.y
+      // group.add(pointLightBig)
 
       const sphereBody = new CANNON.Body({
         shape: new CANNON.Sphere(30),
@@ -119,7 +115,7 @@ const PhysicsmModule = () => {
       sphereBody.angularDamping = 0.01
 
       const hemisphere = new THREE.AmbientLight("white", 1)
-      scene.add(hemisphere)
+      // scene.add(hemisphere)
 
       //
 
@@ -136,30 +132,31 @@ const PhysicsmModule = () => {
 
       for (let index = 0; index < 100; index++) {
         let asteroid = new THREE.Mesh(Box2Geometry, Box2material)
-        asteroid.add(pointLight)
         const asteroidBody = new CANNON.Body({
           shape: new CANNON.Sphere(5),
           mass: 0.5,
           position: new CANNON.Vec3(
-            THREE.MathUtils.randFloatSpread(width / 10),
-            THREE.MathUtils.randFloatSpread(height),
+            THREE.MathUtils.randFloatSpread(width / 50),
+            THREE.MathUtils.randFloatSpread(height / 10),
 
             THREE.MathUtils.randFloatSpread(10000)
           ),
         })
-        asteroidBody.linearDamping = 0.4
+
+        // asteroidBody.linearDamping = 0.4
         astroRef.push(asteroid)
         ref.push(asteroidBody)
         group.add(asteroid)
         world.addBody(asteroidBody)
       }
+      group.add(pointLight)
 
       const update = () => {
         for (let index = 0; index < 100; index++) {
           ref[index].position.z -= 4
-          pointLight.position.z = ref[index].position.z
-          pointLight.position.x = ref[index].position.x
-          pointLight.position.y = ref[index].position.y
+          pointLight.position.z = astroRef[index].position.z
+          // pointLightBig.position.x = ref[index].position.x
+          // pointLightBig.position.y = ref[index].position.y
 
           if (ref[index].position.z < -30) {
             ref[index].position.z = THREE.MathUtils.randFloatSpread(10000)
@@ -179,6 +176,7 @@ const PhysicsmModule = () => {
         requestAnimationFrame(animate)
         world.step(timeStamp)
         update()
+
         PlaneMesh.position.copy(groundBody.position)
         PlaneMesh.quaternion.copy(groundBody.quaternion)
 
