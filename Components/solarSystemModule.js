@@ -174,8 +174,6 @@ const SolarSystemModule = () => {
         group.add(sunMesh)
       }
 
-      lathe.position.set(0, 0, 0)
-
       marsMesh?.position.set(-200, 0, -15)
 
       sunMesh?.position.set(0, 0, 4)
