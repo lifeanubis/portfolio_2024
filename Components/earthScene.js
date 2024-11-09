@@ -51,8 +51,8 @@ void main() {
 //
 
 const textureLoader = new THREE.TextureLoader()
-textureLoader.load("./model/earth/earth_day.jpg", (texture) => {
-  earthGeometry = new THREE.IcosahedronGeometry(2, 50)
+textureLoader.load("./model/planets/earth_day.jpg", (texture) => {
+  earthGeometry = new THREE.IcosahedronGeometry(7, 50)
   earthMaterial = new THREE.MeshStandardMaterial({
     // wireframe: true,
     bumpMap: texture,

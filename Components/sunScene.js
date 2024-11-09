@@ -52,7 +52,7 @@ void main() {
 
 const textureLoader = new THREE.TextureLoader()
 textureLoader.load("./model/sun/sun_texture.jpg", (texture) => {
-  sunGeometry = new THREE.IcosahedronGeometry(2, 50)
+  sunGeometry = new THREE.IcosahedronGeometry(20, 50)
   sunMaterial = new THREE.ShaderMaterial({
     vertexColors: true,
     vertexShader: vertexShader,
@@ -65,6 +65,7 @@ textureLoader.load("./model/sun/sun_texture.jpg", (texture) => {
   })
 
   sunMesh = new THREE.Mesh(sunGeometry, sunMaterial)
+  sunMesh.rotation.y = 0
 })
 
 export { sunMesh, sunMaterial, sunGeometry }

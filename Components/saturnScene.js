@@ -14,7 +14,7 @@ asteroidMaterial = new THREE.MeshStandardMaterial({
 
 const textureLoader = new THREE.TextureLoader()
 textureLoader.load("./model/saturn/saturn_texture.jpg", (texture) => {
-  saturnGeometry = new THREE.IcosahedronGeometry(5, 50)
+  saturnGeometry = new THREE.IcosahedronGeometry(15, 50)
 
   saturnMaterial = new THREE.MeshStandardMaterial({
     // wireframe: true,

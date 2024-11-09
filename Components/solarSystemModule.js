@@ -6,6 +6,9 @@ import { useEffect } from "react"
 import * as THREE from "three"
 import { latheR } from "./textExport"
 import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
+import { marsMesh, marsMaterial, marsGeometry } from "./marsScene"
+import { jupiterMesh, jupiterMaterial, jupiterGeometry } from "./jupiterScene"
+
 import {
   saturnMesh,
   saturnMaterial,
@@ -22,7 +25,7 @@ import gsap from "gsap"
 
 const SolarSystemModule = () => {
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && sunMesh !== "null") {
       const width = window.innerWidth
       const height = window.innerHeight
       const canvas = document.createElement("canvas")
@@ -44,7 +47,7 @@ const SolarSystemModule = () => {
       const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
       const renderer = new THREE.WebGLRenderer()
       renderer.setSize(width, height)
-      // camera.position.z = -40
+      camera.position.z = -40
       // set(cam_posx, cam_posy, cam_posz)
 
       document.body.appendChild(renderer.domElement)
@@ -88,11 +91,12 @@ const SolarSystemModule = () => {
       // lathe.add(pointLightStar)
       // lathe.add(pointLight)
       // scene.add(pointLight)
-      let mars = earthMesh.clone()
       // let saturn = earthMesh.clone()
 
-      group.add(mars)
+      group.add(marsMesh)
       group.add(saturnMesh)
+      group.add(jupiterMesh)
+
       const ref = []
       const astroRef = []
 
@@ -119,13 +123,13 @@ const SolarSystemModule = () => {
         return { asteroid, updateAstro }
       }
 
-      for (let index = 0; index < 400; index++) {
-        const elementinner = addAsteroid(index, 7).asteroid
-        const elementOuter = addAsteroid(index, 10).asteroid
+      for (let index = 0; index < 4000; index++) {
+        const elementinner = addAsteroid(index, 20).asteroid
+        const elementOuter = addAsteroid(index, 22).asteroid
 
         ref.push(elementinner)
         ref.push(elementOuter)
-        saturnMesh.add(elementinner, elementOuter)
+        saturnMesh?.add(elementinner, elementOuter)
       }
       ////////////////////////////////////
 
@@ -155,8 +159,6 @@ const SolarSystemModule = () => {
         // group.add(singleProjectile)
         world.addBody(singleProjectileBody)
       }
-      //
-      // console.log(model, mixer, "======")
 
       //
       const update = () => {
@@ -180,28 +182,33 @@ const SolarSystemModule = () => {
       group.add(lathe)
       // earthMesh.add(pointLight)
       // if (earthMaterial && earthGeometry && earthMesh) {
-      group.add(sunMesh)
-      group.add(earthMesh)
+      if (sunMesh !== "undefined" && earthMesh !== "undefined") {
+        group.add(earthMesh)
+        group.add(sunMesh)
+      }
+
       lathe.position.set(0, 0, 0)
 
-      mars.position.set(-25, 0, -15)
-      saturnMesh.position.set(-25, 0, 15)
+      marsMesh?.position.set(-200, 0, -15)
+
+      sunMesh?.position.set(0, 0, 4)
+      earthMesh?.position.set(100, 0, 0)
 
       const saturnBody = new CANNON.Body({
         shape: new CANNON.Sphere(5),
-        mass: 100,
-        position: new CANNON.Vec3(-25, 0, 15),
-        type: CANNON.Body.DYNAMIC,
+        mass: 1,
+        // position: new CANNON.Vec3(70, 0, 50),
+        // type: CANNON.Body.KINEMATIC,
       })
-
       world.addBody(saturnBody)
+
+      saturnBody.position.set(200, 0, 50)
+
+      jupiterMesh.position.set(100, 0, -100)
 
       ambientLight.position.set(-25, 0, 0)
       // group.children[0].add(ambientLight)
       group.add(ambientLight)
-
-      sunMesh.position.set(0, 0, 4)
-      earthMesh.position.set(-15, 0, 0)
       const timeLine = gsap.timeline()
 
       /////////////////// ship render
@@ -219,8 +226,8 @@ const SolarSystemModule = () => {
 
         directional.position.set(300, 200, 0)
         directionalZ.position.set(0, 0, -200)
-        model.position.x = 300
-        model.scale.set(0.05, 0.05, 0.05)
+        model.position.x = 600
+        model.scale.set(0.02, 0.02, 0.02)
         group.add(model)
         timeLine
           .to(model.rotation, {
@@ -234,25 +241,26 @@ const SolarSystemModule = () => {
             duration: 4.0,
           })
           .to(camera.position, {
-            x: 305,
-            y: 20,
+            x: 605,
+            y: 10,
+            z: 10,
             // delay: 2,
-            duration: 4.0,
+            duration: 7.0,
           })
           .add("start")
-          // .to(
-          //   model.position,
-          //   {
-          //     x: 15,
-          //     duration: 14.0,
-          //   },
-          //   "start"
-          // )
+          .to(
+            model.position,
+            {
+              x: 40,
+              duration: 14.0,
+            },
+            "start"
+          )
           .to(
             camera.position,
             {
-              x: 15,
-              duration: 14.0,
+              x: 70,
+              duration: 20.0,
             },
             "start"
           )
@@ -274,60 +282,41 @@ const SolarSystemModule = () => {
         let posX = Math.sin(time.getElapsedTime()) * Math.PI * 0.2
         let posY = Math.cos(time.getElapsedTime())
 
-        earthMesh.rotation.y = planetRotation += 0.001
+        // earthMesh.position.x += Math.sin(time.getElapsedTime() * Math.PI * 0.2)
+        // earthMesh.position.z += Math.cos(time.getElapsedTime() * Math.PI * 0.2)
 
         pointLightStar.position.set(posX, posY, -4)
         pointLight.position.set(posX, posY, 5)
       }
-
       const sunMovement = (time) => {
-        // sunMesh.rotation.y = planetRotation += 0.0005
+        sunMesh.rotation.y += 0.0005
         sunMaterial.uniforms.time.value = time * 0.005
         saturnBody.angularVelocity.y += 0.00005
-
-        // model.position.x += 0.01
-        // saturnMesh.rotation.set(0, (planetRotation += 0.005), 0.005)
+        earthMesh.rotation.y += 0.01
+        marsMesh.rotation.y += 0.01
+        jupiterMesh.rotation.y += 0.01
       }
-      // if (mixer) {
-      // model.position.z += 1
-      // model.position.x += 1
-      // }
-
-      // console.log(model)
 
       const camControlls = () => {
         timeLine.to(camera.position, {
-          x: 400,
-          duration: 1.0,
+          x: 650,
+          duration: 2,
+          onUpdate: () => camera.lookAt(sunMesh.position),
         })
         // .to(camera.position, {
-        //   y: 300,
-        //   duration: 1.0,
-        // })
-        // .to(model.rotation, {
-        //   y: 3,
-        //   duration: 7.0,
-        //   onUpdate: () => camera.lookAt(sunMesh.position),
-        // })
-        // .to(camera.position, {
-        //   x: 300,
-        //   duration: 3.0,
-        //   // onUpdate: () => camera.lookAt(sunMesh.position),
-        // })
-        // .to(camera.position, {
         //   x: mars.position.x - 4,
-        //   duration: 10.0,
-        //   onUpdate: () => camera.lookAt(earthMesh.position),
+        //   duration: 4,
+        //   onUpdate: () => camera.lookAt(mars.position),
         // })
         // .to(camera.position, {
         //   z: mars.position.z,
-        //   duration: 10.0,
+        //   duration: 4,
         //   onUpdate: () => camera.lookAt(mars.position),
         // })
         // .to(camera.position, {
         //   z: 16,
-        //   duration: 10.0,
-        //   onUpdate: () => camera.lookAt(sunMesh.position),
+        //   duration: 4,
+        //   onUpdate: () => camera.lookAt(saturnBody.position),
         // })
       }
       controls.enableDamping = true
@@ -335,18 +324,40 @@ const SolarSystemModule = () => {
       // camControllShip()
       camControlls()
 
+      //      quaternions rotation
+      const quaternion = new CANNON.Quaternion()
+      quaternion.setFromAxisAngle(new CANNON.Vec3(0, -1, 0), 0.0008)
+
+      const position = new CANNON.Vec3(1, 0, 0)
+      const rotatedPosition = new CANNON.Vec3()
+      quaternion.vmult(position, rotatedPosition)
+
+      function rotateAroundAxis() {
+        const quaternionO = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, -1, 0).normalize(),
+          0.0008
+        )
+
+        earthMesh.position.applyQuaternion(quaternionO)
+        marsMesh.position.applyQuaternion(quaternionO)
+        jupiterMesh.position.applyQuaternion(quaternionO)
+      }
+      //     quaternions rotation
+
       const animate = (time) => {
         requestAnimationFrame(animate)
         sunMovement(time)
         world.step(timeStamp)
         saturnMesh.position.copy(saturnBody.position)
         saturnMesh.quaternion.copy(saturnBody.quaternion)
-        // update()
+        quaternion.vmult(saturnBody.position, saturnBody.position) // Apply the rotation
+
         for (let index = 0; index < 100; index++) {
           projectileRef[index].position.copy(projectile[index].position)
           projectileRef[index].quaternion.copy(projectile[index].quaternion)
         }
         lathMovement()
+        rotateAroundAxis()
         addAsteroid().updateAstro()
         controls.update()
         renderer.render(scene, camera)
@@ -354,7 +365,7 @@ const SolarSystemModule = () => {
 
       animate()
     }
-  }, [])
+  }, [sunMesh, earthMesh, saturnMesh, marsMesh])
 }
 
 export default SolarSystemModule
