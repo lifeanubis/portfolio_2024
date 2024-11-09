@@ -2,12 +2,12 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-import { FontLoader } from "three/addons/loaders/FontLoader.js"
-import { TTFLoader } from "three/addons/loaders/TTFLoader.js"
+// import { FontLoader } from "three/addons/loaders/FontLoader.js"
+// import { TTFLoader } from "three/addons/loaders/TTFLoader.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-import SomeFunction from "../node_modules/three/examples/fonts/helvetiker_bold.typeface.json"
+// import SomeFunction from "../node_modules/three/examples/fonts/helvetiker_bold.typeface.json"
 
 const TextLoadModule = () => {
   useEffect(() => {
@@ -22,12 +22,6 @@ const TextLoadModule = () => {
       renderer.setSize(width, height)
       document.body.appendChild(renderer.domElement)
       renderer.setClearColor("darkblue")
-
-      const geometry = new THREE.IcosahedronGeometry(1, 50)
-      const material = new THREE.MeshNormalMaterial({
-        // wireframe: true,
-        side: THREE.DoubleSide,
-      })
 
       const asteroidGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2)
       const asteroidMaterial = new THREE.MeshNormalMaterial({

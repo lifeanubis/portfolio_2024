@@ -5,7 +5,6 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-import { sunGeometry, sunMesh } from "./earthScene"
 
 // import spotlightAud from ""
 

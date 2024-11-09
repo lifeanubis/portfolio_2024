@@ -20,12 +20,6 @@ const MultiElement = () => {
       document.body.appendChild(renderer.domElement)
       renderer.setClearColor(0x00ff00)
 
-      const geometry = new THREE.IcosahedronGeometry(1, 50)
-      const material = new THREE.MeshNormalMaterial({
-        // wireframe: true,
-        side: THREE.DoubleSide,
-      })
-
       const asteroidGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1)
       const asteroidMaterial = new THREE.MeshNormalMaterial({
         // wireframe: true,

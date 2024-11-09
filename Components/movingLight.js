@@ -4,13 +4,13 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-import { latheR } from "./textExport"
-import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
-import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
-import { CameraControls } from "@react-three/drei"
-import { FlyControls } from "three/addons/controls/FlyControls.js"
-import gsap from "gsap"
-import * as CANNON from "cannon-es"
+// import { latheR } from "./textExport"
+// import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
+// import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
+// import { CameraControls } from "@react-three/drei"
+// import { FlyControls } from "three/addons/controls/FlyControls.js"
+// import gsap from "gsap"
+// import * as CANNON from "cannon-es"
 
 // import { CameraControls } from "three/addons/controls/"
 
@@ -23,13 +23,7 @@ const MovingLightModule = () => {
       canvas.height = height
       canvas.width = width
 
-      const timeStamp = 1 / 60
-
       //   groundBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
-
-      let cam_posx = 0
-      let cam_posy = 1
-      let cam_posz = -10
 
       const scene = new THREE.Scene()
       const group = new THREE.Group()
@@ -48,13 +42,6 @@ const MovingLightModule = () => {
       const controls = new OrbitControls(camera, renderer.domElement)
 
       //   const PlaneGeometry = new THREE.PlaneGeometry(30, 30)
-      const Planematerial = new THREE.MeshStandardMaterial({
-        // color: "red",
-        // side: 2,
-      })
-      //   const PlaneMesh = new THREE.Mesh(PlaneGeometry, Planematerial)
-
-      //   group.add(PlaneMesh)
 
       const Box2Geometry = new THREE.IcosahedronGeometry(2, 1)
       const Box2material = new THREE.MeshStandardMaterial({
@@ -69,16 +56,7 @@ const MovingLightModule = () => {
       box2MeshClone.position.x = 5
       group.add(box2MeshClone)
 
-      const pointLight = new THREE.PointLight("green", 150, 0, 0)
       const directionaL = new THREE.DirectionalLight("red", 1)
-      const ambientLight = new THREE.AmbientLight("white", 1)
-
-      const sphereGeometry = new THREE.SphereGeometry(10)
-      const sphereMaterial = new THREE.MeshStandardMaterial({
-        // wireframe: true,
-        color: "red",
-      })
-      const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
 
       group.add(box2Mesh)
 
@@ -106,11 +84,9 @@ const MovingLightModule = () => {
         }
       )
 
-      const time = new THREE.Clock()
-
       scene.add(group)
 
-      const animate = (time) => {
+      const animate = () => {
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
         controls.update()

@@ -1,11 +1,11 @@
 "use client"
 
-import CubeTemplate from "@/Components/cubeTemplate"
-import ParticleModule from "@/Components/particleModule"
+// import CubeTemplate from "@/Components/cubeTemplate"
+// import ParticleModule from "@/Components/particleModule"
 // import TitleDisplay from "@/Components/titleDisplay"
 // import AnimatedModel from "@/Components/animatedModel"
 // import ShaderdModel from "@/Components/shaderModel"
-import ShaderdModel from "@/Components/jetShader"
+// import ShaderdModel from "@/Components/jetShader"
 
 import dynamic from "next/dynamic"
 
@@ -16,28 +16,28 @@ const SolarSystemModule = dynamic(
   }
 )
 
-const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
-  ssr: false,
-})
+// const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
+//   ssr: false,
+// })
 
-const PhysicsModule = dynamic(() => import("@/Components/physicsModule"), {
-  ssr: false,
-})
+// const PhysicsModule = dynamic(() => import("@/Components/physicsModule"), {
+//   ssr: false,
+// })
 
-const MovingLightModule = dynamic(() => import("@/Components/movingLight"), {
-  ssr: false,
-})
+// const MovingLightModule = dynamic(() => import("@/Components/movingLight"), {
+//   ssr: false,
+// })
 
-const CircleRotationModule = dynamic(
-  () => import("@/Components/circleRotationModule"),
-  {
-    ssr: false,
-  }
-)
+// const CircleRotationModule = dynamic(
+//   () => import("@/Components/circleRotationModule"),
+//   {
+//     ssr: false,
+//   }
+// )
 
-const TextLoadModule = dynamic(() => import("@/Components/textLoadModule"), {
-  ssr: false,
-})
+// const TextLoadModule = dynamic(() => import("@/Components/textLoadModule"), {
+//   ssr: false,
+// })
 
 import React from "react"
 
@@ -70,9 +70,4 @@ export default function Home() {
       {/* <ShaderdModel /> */}
     </div>
   )
-  // } else {
-  //   return <h1>loading..............</h1>
-  // }
-
-  // }, [])
 }

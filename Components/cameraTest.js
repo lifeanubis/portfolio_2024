@@ -1,14 +1,13 @@
 "use client"
 
-import { OrbitControls } from "three/addons/controls/OrbitControls.js"
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-import { latheR } from "./textExport"
-import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
-import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
-import { CameraControls } from "@react-three/drei"
-import { FlyControls } from "three/addons/controls/FlyControls.js"
+// import { latheR } from "./textExport"
+// import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
+// import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
+// import { CameraControls } from "@react-three/drei"
 import gsap from "gsap"
 // import { CameraControls } from "three/addons/controls/"
 
@@ -54,18 +53,13 @@ const CameraTestmModule = () => {
       const boxMesh = new THREE.Mesh(LatheGeometry, Lathematerial)
 
       const box2Mesh = new THREE.Mesh(Box2Geometry, Box2material)
-      const controls = new OrbitControls(camera, renderer.domElement)
       boxMesh.position.set(1, 0, 2)
-      const flyControls = new FlyControls(camera, renderer.domElement)
 
       // const CameraControl =  CameraControls(camera, renderer.domElement)
       // console.log(CameraControl, "CameraControl--------------------")
 
       // cameraControls.addEventListener("change", renderer) 0xff9000
       const pointLight = new THREE.PointLight(0xff09107, 15, 30, 1)
-      const pointLightStar = new THREE.PointLight("cyan", 15, 10, 0)
-      const starLight = new THREE.PointLight("green", 15, 10, 0)
-
       const hemisphere = new THREE.HemisphereLight("purple", "green", 2)
       scene.add(hemisphere)
       scene.background = new THREE.Color().setHSL(
@@ -92,22 +86,10 @@ const CameraTestmModule = () => {
         }
       )
 
-      const time = new THREE.Clock()
       //   const lightHelperr = new THREE.CameraHelper(camera)
       //   scene.add(lightHelperr)
       scene.add(group)
       camera.position.z = 5
-      let planetRotation = 0
-      let posZ = 0
-      let cam_posZ = 0
-
-      function rotateBox(time) {
-        const angle = time * 0.002 // Control rotation speed
-        // group.rotation.y = -angle // Rotate around the Z-axis
-        // camera.lookAt(boxMesh.position)
-        camera.rotation.y = angle
-        // box2Mesh.position.x = angle // Rotate around the Z-axis
-      }
 
       const timeLine = gsap.timeline()
 
@@ -135,32 +117,9 @@ const CameraTestmModule = () => {
       }
       camControlls()
 
-      const animate = (time) => {
+      const animate = () => {
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
-
-        // boxMesh.rotateZ(0.01)
-        // boxMesh.rotateX(0.01)
-        // if (cam_posy > -4) {
-        //   camera.position.set(cam_posx, cam_posy, cam_posz)
-        //   rotateBox(time)
-        //   // camera.lookAt(boxMesh.position)
-        //   //   camera.position.set(cam_posx, cam_posy, cam_posz)
-
-        //   // camera.rotation.set(
-        //   //   cam_posx,
-        //   //   cam_posy,
-        //   //   cam_posz
-        //   //   //   (cam_posz -= Math.PI * 0.02)
-        //   //   // "ZYX"
-        //   // )
-        // } else {
-        //   camera.position.set(cam_posx, (cam_posy += 0.07), cam_posz)
-        // }
-
-        console.log(cam_posy, "------------")
-        // scene.rotation.set(box2Mesh.position.x, (cam_posy -= 0.01), 4, "YZX")
-        // camera.rotation.set((cam_posx -= 0.001), cam_posy, cam_posz, "XYZ")
       }
 
       animate()

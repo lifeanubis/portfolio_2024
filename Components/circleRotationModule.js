@@ -20,12 +20,6 @@ const CircleRotationModule = () => {
       document.body.appendChild(renderer.domElement)
       renderer.setClearColor("darkblue")
 
-      const geometry = new THREE.IcosahedronGeometry(1, 50)
-      const material = new THREE.MeshNormalMaterial({
-        // wireframe: true,
-        side: THREE.DoubleSide,
-      })
-
       const asteroidGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2)
       const asteroidMaterial = new THREE.MeshNormalMaterial({
         // wireframe: true,

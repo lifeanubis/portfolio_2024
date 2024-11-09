@@ -1,15 +1,13 @@
 "use client"
 
-import { OrbitControls } from "three/addons/controls/OrbitControls.js"
-
 import { useEffect } from "react"
 import * as THREE from "three"
-import { latheR } from "./textExport"
-import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
-import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
-import { CameraControls } from "@react-three/drei"
-import { FlyControls } from "three/addons/controls/FlyControls.js"
-import gsap from "gsap"
+// import { latheR } from "./textExport"
+// import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
+// import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
+// import { CameraControls } from "@react-three/drei"
+// import { FlyControls } from "three/addons/controls/FlyControls.js"
+// import gsap from "gsap"
 import * as CANNON from "cannon-es"
 
 // import { CameraControls } from "three/addons/controls/"
@@ -50,7 +48,6 @@ const PhysicsmModule = () => {
       renderer.setSize(width, height)
 
       document.body.appendChild(renderer.domElement)
-      const controls = new OrbitControls(camera, renderer.domElement)
 
       const PlaneGeometry = new THREE.PlaneGeometry(30, 30)
       const Planematerial = new THREE.MeshStandardMaterial({
@@ -77,7 +74,6 @@ const PhysicsmModule = () => {
         // wireframe: true,
         // color: "cyan",
       })
-      const box2Mesh = new THREE.Mesh(Box2Geometry, Box2material)
 
       // group.add(box2Mesh)
 
@@ -87,7 +83,6 @@ const PhysicsmModule = () => {
       //   return world.addBody(boxBody)
       // }
       const pointLight = new THREE.DirectionalLight("white", 1)
-      const pointLightBig = new THREE.PointLight("yellow", 15, 0, 0)
 
       // group.add(box2Mesh)
 
@@ -114,7 +109,6 @@ const PhysicsmModule = () => {
       sphereBody.linearDamping = 0.99
       sphereBody.angularDamping = 0.01
 
-      const hemisphere = new THREE.AmbientLight("white", 1)
       // scene.add(hemisphere)
 
       //
@@ -166,13 +160,11 @@ const PhysicsmModule = () => {
         }
       }
 
-      const time = new THREE.Clock()
-
       group.add(sphereMesh)
 
       scene.add(group)
 
-      const animate = (time) => {
+      const animate = () => {
         requestAnimationFrame(animate)
         world.step(timeStamp)
         update()

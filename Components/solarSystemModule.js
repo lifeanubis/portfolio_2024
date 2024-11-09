@@ -4,23 +4,15 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
 import { useEffect } from "react"
 import * as THREE from "three"
-import { latheR } from "./textExport"
-import { earthMesh, earthMaterial, earthGeometry } from "./earthScene"
-import { marsMesh, marsMaterial, marsGeometry } from "./marsScene"
-import { jupiterMesh, jupiterMaterial, jupiterGeometry } from "./jupiterScene"
+import { earthMesh } from "./earthScene"
+import { marsMesh } from "./marsScene"
+import { jupiterMesh } from "./jupiterScene"
 
-import {
-  saturnMesh,
-  saturnMaterial,
-  saturnGeometry,
-  asteroidMesh,
-  asteroidGeometry,
-  asteroidMaterial,
-} from "./saturnScene"
+import { saturnMesh, asteroidGeometry, asteroidMaterial } from "./saturnScene"
 import * as CANNON from "cannon-es"
 
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
-import { sunMesh, sunMaterial, sunGeometry } from "./sunScene"
+import { sunMesh, sunMaterial } from "./sunScene"
 import gsap from "gsap"
 
 const SolarSystemModule = () => {
@@ -31,9 +23,6 @@ const SolarSystemModule = () => {
       const canvas = document.createElement("canvas")
       canvas.height = height
       canvas.width = width
-      let cam_posx = 0
-      let cam_posy = 0
-      let cam_posz = 2
 
       const world = new CANNON.World({
         gravity: new CANNON.Vec3(0, 0, 0),
@@ -52,27 +41,26 @@ const SolarSystemModule = () => {
 
       document.body.appendChild(renderer.domElement)
 
-      const LatheGeometry = new THREE.BoxGeometry(5, 1, 1)
-      const Lathematerial = new THREE.MeshStandardMaterial({
-        // wireframe: true,
-        // emissive: "red",
-        // emissiveIntensity: 1,
-        // color: "red",
-      })
+      // const LatheGeometry = new THREE.BoxGeometry(5, 1, 1)
+      // const Lathematerial = new THREE.MeshStandardMaterial({
+      //   // wireframe: true,
+      //   // emissive: "red",
+      //   // emissiveIntensity: 1,
+      //   // color: "red",
+      // })
       const controls = new OrbitControls(camera, renderer.domElement)
 
       const pointLight = new THREE.PointLight(0xff09107, 1, 0, 0)
       const pointLightStar = new THREE.PointLight("cyan", 15, 10, 0)
-      const starLight = new THREE.PointLight("green", 15, 10, 0)
 
       const ambientLight = new THREE.AmbientLight("white", 1)
 
-      scene.background = new THREE.Color().setHSL(
-        0.821,
-        0.9,
-        0.05,
-        THREE.SRGBColorSpace
-      )
+      // scene.background = new THREE.Color().setHSL(
+      //   0.821,
+      //   0.9,
+      //   0.05,
+      //   THREE.SRGBColorSpace
+      // )
       // const ambientLight = new THREE.AmbientLight("white", 5)
       // scene.add(ambientLight)
       // ambientLight.position.z = -12
@@ -86,7 +74,7 @@ const SolarSystemModule = () => {
         }
       )
 
-      const lathe = new THREE.Mesh(LatheGeometry, Lathematerial)
+      // const lathe = new THREE.Mesh(LatheGeometry, Lathematerial)
       const time = new THREE.Clock()
       // lathe.add(pointLightStar)
       // lathe.add(pointLight)
@@ -98,12 +86,11 @@ const SolarSystemModule = () => {
       group.add(jupiterMesh)
 
       const ref = []
-      const astroRef = []
+      // const astroRef = []
 
       function addAsteroid(index, radius) {
         let angle = (index / 40) * Math.PI * 2 // Calculate angle in radians
         let x = Math.sin(angle) * radius // X position based on angle and radius
-        let y = Math.cos(angle) * radius // Keeping it on the XZ plane, so Y is 0
         let z = Math.cos(angle) * radius // Z position based on angle and radius
 
         const asteroid = new THREE.Mesh(asteroidGeometry, asteroidMaterial)
@@ -112,7 +99,7 @@ const SolarSystemModule = () => {
         asteroid.position.z = z
 
         function updateAstro() {
-          ref.map((elementR, indexx) => {
+          ref.map((elementR) => {
             elementR.position.z +=
               Math.cos(time.getElapsedTime() * (Math.random() * 10)) / 100
             elementR.position.x +=
@@ -161,25 +148,25 @@ const SolarSystemModule = () => {
       }
 
       //
-      const update = () => {
-        for (let index = 0; index < 500; index++) {
-          projectile[index].position.x -= 0.5
-          projectile[index].position.z += 0.5
+      // const update = () => {
+      //   for (let index = 0; index < 500; index++) {
+      //     projectile[index].position.x -= 0.5
+      //     projectile[index].position.z += 0.5
 
-          if (projectile[index].position.x < -50) {
-            projectile[index].position.z = THREE.MathUtils.randFloatSpread(10)
-            projectile[index].position.y = THREE.MathUtils.randFloatSpread(
-              height / 10
-            )
-            projectile[index].position.x = THREE.MathUtils.randFloatSpread(
-              width / 50
-            )
-          }
-        }
-      }
+      //     if (projectile[index].position.x < -50) {
+      //       projectile[index].position.z = THREE.MathUtils.randFloatSpread(10)
+      //       projectile[index].position.y = THREE.MathUtils.randFloatSpread(
+      //         height / 10
+      //       )
+      //       projectile[index].position.x = THREE.MathUtils.randFloatSpread(
+      //         width / 50
+      //       )
+      //     }
+      //   }
+      // }
 
       ////////////////////////////////
-      group.add(lathe)
+      // group.add(lathe)
       // earthMesh.add(pointLight)
       // if (earthMaterial && earthGeometry && earthMesh) {
       if (sunMesh !== "undefined" && earthMesh !== "undefined") {
@@ -214,7 +201,7 @@ const SolarSystemModule = () => {
       /////////////////// ship render
 
       const loader = new GLTFLoader()
-      let model, mixer
+      let model
       const directional = new THREE.DirectionalLight(0xeb9c50, 10)
       const directionalZ = new THREE.DirectionalLight(0xeb9c50, 2)
 
@@ -273,10 +260,6 @@ const SolarSystemModule = () => {
       scene.add(axisHelper)
 
       scene.add(group)
-
-      let planetRotation = 0
-      let posZ = 0
-      let cam_posZ = 0
 
       const lathMovement = () => {
         let posX = Math.sin(time.getElapsedTime()) * Math.PI * 0.2
