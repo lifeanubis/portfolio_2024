@@ -9,11 +9,6 @@
 
 import dynamic from "next/dynamic"
 
-const SolarSystemModule = dynamic(
-  () => import("@/Components/solarSystemModule"),
-  { ssr: false, loading: () => <p>Loading...</p> }
-)
-
 import { earthMesh } from "@/Components/earthScene"
 import { marsMesh } from "@/Components/marsScene"
 import { jupiterMesh } from "@/Components/jupiterScene"
@@ -25,6 +20,7 @@ import {
 } from "@/Components/saturnScene"
 
 import { sunMesh, sunMaterial } from "@/Components/sunScene"
+import { useEffect } from "react"
 
 // const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
 //   ssr: false,
