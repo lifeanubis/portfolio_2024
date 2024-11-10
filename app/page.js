@@ -49,57 +49,79 @@ const SolarSystemModule = dynamic(
 )
 
 import React, { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
+  const router = useRouter()
+
   const Ui = () => {
-    return <SolarSystemModule />
+    return (() => {
+      // IIFE code block
+      router.refresh()
+      //  <SolarSystemModule />
+    })()
   }
-  useEffect(() => {
-    if (
-      asteroidMaterial &&
-      asteroidGeometry &&
-      marsMesh &&
-      jupiterMesh &&
-      sunMesh &&
-      earthMesh &&
-      saturnMesh
-    ) {
-      Ui()
-    }
-  }, [
-    asteroidMaterial,
-    asteroidGeometry,
-    marsMesh,
-    jupiterMesh,
-    sunMesh,
-    earthMesh,
-    saturnMesh,
-  ])
+
+  // useEffect(() => {
+  //   if (asteroidMaterial) {
+  //     window.location.reload()
+  //   }
+  // }, [])
 
   return (
     <div className="">
-      {Ui()}
-      {/* <SolarSystemModule /> */}
-      {/* <ShaderdModel /> */}
-
-      {/* <SpaceShipModule /> */}
-
-      {/* <TextLoadModule /> */}
-
-      {/* <CircleRotationModule /> */}
-
-      {/* <PhysicsModule /> */}
-      {/* <MovingLightModule /> */}
-
-      {/* <CameraTestModule /> */}
-
-      {/* <h1>asdasd</h1> */}
-      {/* <ParticleModule /> */}
-      {/* <Table /> */}
-      {/* <CubeTemplate /> */}
-      {/* <TitleDisplay /> */}
-      {/* <AnimatedModel /> */}
-      {/* <ShaderdModel /> */}
+      <SolarSystemModule />
     </div>
   )
+  {
+    /* <SolarSystemModule /> */
+  }
+  {
+    /* <ShaderdModel /> */
+  }
+
+  {
+    /* <SpaceShipModule /> */
+  }
+
+  {
+    /* <TextLoadModule /> */
+  }
+
+  {
+    /* <CircleRotationModule /> */
+  }
+
+  {
+    /* <PhysicsModule /> */
+  }
+  {
+    /* <MovingLightModule /> */
+  }
+
+  {
+    /* <CameraTestModule /> */
+  }
+
+  {
+    /* <h1>asdasd</h1> */
+  }
+  {
+    /* <ParticleModule /> */
+  }
+  {
+    /* <Table /> */
+  }
+  {
+    /* <CubeTemplate /> */
+  }
+  {
+    /* <TitleDisplay /> */
+  }
+  {
+    /* <AnimatedModel /> */
+  }
+  {
+    /* <ShaderdModel /> */
+  }
 }

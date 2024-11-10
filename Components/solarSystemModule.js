@@ -19,6 +19,12 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import gsap from "gsap"
 
 const SolarSystemModule = () => {
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && asteroidMaterial) {
+  //     window.location.reload()
+  //   }
+  // }, [])
+
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
