@@ -55,19 +55,10 @@ import { useEffect } from "react"
 export default function Home() {
   const router = useRouter()
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      asteroidMaterial &&
-      asteroidGeometry &&
-      marsMesh &&
-      jupiterMesh &&
-      sunMesh &&
-      earthMesh &&
-      saturnMesh
-    ) {
+    if (typeof window !== "undefined" && SolarSystemModule) {
       router.refresh()
     }
-  }, [])
+  }, [router])
 
   return (
     <div className="">
