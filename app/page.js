@@ -20,6 +20,7 @@ import {
 } from "@/Components/saturnScene"
 
 import { sunMesh, sunMaterial } from "@/Components/sunScene"
+import { useEffect } from "react"
 
 // const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
 //   ssr: false,
@@ -55,18 +56,14 @@ export default function Home() {
     }
   )
 
-  // useEffect(() => {
-  //   console.log(SolarSystemModule(), "----------------")
-  // }, [loaded])
+  useEffect(() => {
+    window.history.go(1)
+  }, [SolarSystemModule?.toString()])
   // console.log(SolarSystemModule.toString(), "----------------")
 
   return (
     <div className="">
-      {SolarSystemModule?.toString() !== "" ? (
-        <SolarSystemModule />
-      ) : (
-        <h1>loading assets</h1>
-      )}
+      <SolarSystemModule />
       {/* <ShaderdModel /> */}
 
       {/* <SpaceShipModule /> */}
