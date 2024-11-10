@@ -11,10 +11,20 @@ import dynamic from "next/dynamic"
 
 const SolarSystemModule = dynamic(
   () => import("@/Components/solarSystemModule"),
-  {
-    ssr: false,
-  }
+  { ssr: false, loading: () => <p>Loading...</p> }
 )
+
+import { earthMesh } from "@/Components/earthScene"
+import { marsMesh } from "@/Components/marsScene"
+import { jupiterMesh } from "@/Components/jupiterScene"
+
+import {
+  saturnMesh,
+  asteroidGeometry,
+  asteroidMaterial,
+} from "@/Components/saturnScene"
+
+import { sunMesh, sunMaterial } from "@/Components/sunScene"
 
 // const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
 //   ssr: false,
@@ -43,7 +53,12 @@ import React from "react"
 
 export default function Home() {
   // useEffect(() => {
-  // if (typeof window !== "undefined") {
+  //   first
+
+  //   return () => {
+  //     second
+  //   }
+  // }, [third])
 
   return (
     <div className="">

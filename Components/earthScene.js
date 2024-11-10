@@ -49,16 +49,17 @@ let earthGeometry, earthMaterial, earthMesh
 // `
 
 //
-
-const textureLoader = new THREE.TextureLoader()
-textureLoader.load("./model/planets/earth_day.jpg", (texture) => {
-  earthGeometry = new THREE.IcosahedronGeometry(7, 50)
-  earthMaterial = new THREE.MeshStandardMaterial({
-    // wireframe: true,
-    bumpMap: texture,
-    bumpScale: 20,
-    map: texture,
+if (typeof window !== "undefined") {
+  const textureLoader = new THREE.TextureLoader()
+  textureLoader.load("./model/planets/earth_day.jpg", (texture) => {
+    earthGeometry = new THREE.IcosahedronGeometry(7, 50)
+    earthMaterial = new THREE.MeshStandardMaterial({
+      // wireframe: true,
+      bumpMap: texture,
+      bumpScale: 20,
+      map: texture,
+    })
+    earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
   })
-  earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
-})
+}
 export { earthMesh, earthMaterial, earthGeometry }
