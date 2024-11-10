@@ -61,8 +61,9 @@ export default function Home() {
   // }, [])
 
   const ui = () => {
-    // location.reload() http://localhost:3000
-    router.replace("https://my-world-3d.netlify.app")
+    location.reload()
+    // http://localhost:3000
+    // router.replace("https://my-world-3d.netlify.app")
   }
   setTimeout(() => {
     ui()
