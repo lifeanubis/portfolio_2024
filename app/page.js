@@ -56,7 +56,7 @@ export default function Home() {
   const router = useRouter()
   useEffect(() => {
     if (typeof window !== "undefined" && SolarSystemModule) {
-      router.refresh()
+      router.replace("https://my-world-3d.netlify.app")
     }
   }, [router])
 
