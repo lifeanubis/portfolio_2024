@@ -349,7 +349,7 @@ const SolarSystemModule = () => {
 
       animate()
     }
-  }, [])
+  }, [sunMaterial, earthMesh, saturnMesh, jupiterMesh])
 }
 
 export default SolarSystemModule
