@@ -9,11 +9,6 @@
 
 import dynamic from "next/dynamic"
 
-const SolarSystemModule = dynamic(
-  () => import("@/Components/solarSystemModule"),
-  { ssr: false, loading: () => <p>Loading...</p> }
-)
-
 import { earthMesh } from "@/Components/earthScene"
 import { marsMesh } from "@/Components/marsScene"
 import { jupiterMesh } from "@/Components/jupiterScene"
@@ -49,20 +44,29 @@ import { sunMesh, sunMaterial } from "@/Components/sunScene"
 //   ssr: false,
 // })
 
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-
 export default function Home() {
-  const router = useRouter()
-  useEffect(() => {
-    if (typeof window !== "undefined" && SolarSystemModule) {
-      router.replace("https://my-world-3d.netlify.app")
+  const SolarSystemModule = dynamic(
+    () => import("@/Components/solarSystemModule"),
+    {
+      ssr: false,
+      loading: () => {
+        return <p>Loading...</p>
+      },
     }
-  }, [router])
+  )
+
+  // useEffect(() => {
+  //   console.log(SolarSystemModule(), "----------------")
+  // }, [loaded])
+  // console.log(SolarSystemModule.toString(), "----------------")
 
   return (
     <div className="">
-      <SolarSystemModule />
+      {SolarSystemModule?.toString() !== "" ? (
+        <SolarSystemModule />
+      ) : (
+        <h1>loading assets</h1>
+      )}
       {/* <ShaderdModel /> */}
 
       {/* <SpaceShipModule /> */}
