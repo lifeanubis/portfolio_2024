@@ -49,20 +49,38 @@ import { sunMesh, sunMaterial } from "@/Components/sunScene"
 //   ssr: false,
 // })
 
-import React from "react"
+import React, { useEffect } from "react"
 
 export default function Home() {
-  // useEffect(() => {
-  //   first
-
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
+  const Ui = () => {
+    return <SolarSystemModule />
+  }
+  useEffect(() => {
+    if (
+      asteroidMaterial &&
+      asteroidGeometry &&
+      marsMesh &&
+      jupiterMesh &&
+      sunMesh &&
+      earthMesh &&
+      saturnMesh
+    ) {
+      Ui()
+    }
+  }, [
+    asteroidMaterial,
+    asteroidGeometry,
+    marsMesh,
+    jupiterMesh,
+    sunMesh,
+    earthMesh,
+    saturnMesh,
+  ])
 
   return (
     <div className="">
-      <SolarSystemModule />
+      {Ui()}
+      {/* <SolarSystemModule /> */}
       {/* <ShaderdModel /> */}
 
       {/* <SpaceShipModule /> */}
