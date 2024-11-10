@@ -49,16 +49,25 @@ import { sunMesh, sunMaterial } from "@/Components/sunScene"
 //   ssr: false,
 // })
 
-import React from "react"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Home() {
-  // useEffect(() => {
-  //   first
-
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
+  const router = useRouter()
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      asteroidMaterial &&
+      asteroidGeometry &&
+      marsMesh &&
+      jupiterMesh &&
+      sunMesh &&
+      earthMesh &&
+      saturnMesh
+    ) {
+      router.refresh()
+    }
+  }, [])
 
   return (
     <div className="">
