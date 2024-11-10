@@ -20,7 +20,6 @@ import {
 } from "@/Components/saturnScene"
 
 import { sunMesh, sunMaterial } from "@/Components/sunScene"
-import { useEffect } from "react"
 
 // const CameraTestModule = dynamic(() => import("@/Components/cameraTest"), {
 //   ssr: false,
@@ -41,9 +40,13 @@ import { useEffect } from "react"
 //   }
 // )
 
-// const TextLoadModule = dynamic(() => import("@/Components/textLoadModule"), {
-//   ssr: false,
-// })
+const SolarSystemModule = dynamic(
+  () => import("@/Components/solarSystemModule"),
+  {
+    ssr: false,
+    loading: () => <p>loading.......</p>,
+  }
+)
 
 import React, { useEffect } from "react"
 
