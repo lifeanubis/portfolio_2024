@@ -54,19 +54,19 @@ import { useRouter } from "next/navigation"
 export default function Home() {
   const router = useRouter()
 
-  const Ui = () => {
-    return (() => {
-      // IIFE code block
-      router.refresh()
-      //  <SolarSystemModule />
-    })()
-  }
-
   // useEffect(() => {
   //   if (asteroidMaterial) {
   //     window.location.reload()
   //   }
   // }, [])
+
+  const ui = () => {
+    // location.reload() http://localhost:3000
+    router.replace("https://my-world-3d.netlify.app")
+  }
+  setTimeout(() => {
+    ui()
+  }, 7000)
 
   return (
     <div className="">
