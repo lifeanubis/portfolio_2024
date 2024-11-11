@@ -48,27 +48,9 @@ const SolarSystemModule = dynamic(
   }
 )
 
-import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import React from "react"
 
 export default function Home() {
-  const router = useRouter()
-
-  // useEffect(() => {
-  //   if (asteroidMaterial) {
-  //     window.location.reload()
-  //   }
-  // }, [])
-
-  // const ui = () => {
-  //   // window.location.reload()
-  //   // http://localhost:3000
-  //   // router.replace("https://my-world-3d.netlify.app")
-  // }
-  // setTimeout(() => {
-  //   ui()
-  // }, 7000)
-
   return (
     <div className="">
       <SolarSystemModule />

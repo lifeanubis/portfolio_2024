@@ -19,21 +19,11 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import gsap from "gsap"
 
 const SolarSystemModule = () => {
-  // useEffect(() => {
-  //   if (typeof window !== "undefined" && asteroidMaterial) {
-  //     window.location.reload()
-  //   }
-  // }, [])
-
   const [loader, setloader] = useState(false)
-  const ui = () => {
-    // window.location.reload()
-    // http://localhost:3000
-    // router.replace("https://my-world-3d.netlify.app")
-  }
+
   setTimeout(() => {
     setloader(true)
-  }, 7000)
+  }, 4000)
 
   useEffect(() => {
     if (
@@ -44,7 +34,8 @@ const SolarSystemModule = () => {
       jupiterMesh &&
       sunMesh &&
       earthMesh &&
-      saturnMesh
+      saturnMesh &&
+      loader === true
     ) {
       const width = window.innerWidth
       const height = window.innerHeight
@@ -366,6 +357,13 @@ const SolarSystemModule = () => {
       animate()
     }
   }, [loader])
+  return (
+    loader === false && (
+      <h1 className="bg-gray-700 w-full h-screen text-white flex justify-center pt-52  text-4xl ">
+        loading.... assets
+      </h1>
+    )
+  )
 }
 
 export default SolarSystemModule
