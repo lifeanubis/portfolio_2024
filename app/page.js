@@ -60,14 +60,14 @@ export default function Home() {
   //   }
   // }, [])
 
-  const ui = () => {
-    location.reload()
-    // http://localhost:3000
-    // router.replace("https://my-world-3d.netlify.app")
-  }
-  setTimeout(() => {
-    ui()
-  }, 7000)
+  // const ui = () => {
+  //   // window.location.reload()
+  //   // http://localhost:3000
+  //   // router.replace("https://my-world-3d.netlify.app")
+  // }
+  // setTimeout(() => {
+  //   ui()
+  // }, 7000)
 
   return (
     <div className="">

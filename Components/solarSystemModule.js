@@ -2,7 +2,7 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import * as THREE from "three"
 
 import { earthMesh } from "./earthScene"
@@ -24,6 +24,16 @@ const SolarSystemModule = () => {
   //     window.location.reload()
   //   }
   // }, [])
+
+  const [loader, setloader] = useState(false)
+  const ui = () => {
+    // window.location.reload()
+    // http://localhost:3000
+    // router.replace("https://my-world-3d.netlify.app")
+  }
+  setTimeout(() => {
+    setloader(true)
+  }, 7000)
 
   useEffect(() => {
     if (
@@ -355,7 +365,7 @@ const SolarSystemModule = () => {
 
       animate()
     }
-  }, [])
+  }, [loader])
 }
 
 export default SolarSystemModule
