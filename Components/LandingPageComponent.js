@@ -17,7 +17,6 @@ const LandingPageComponent = () => {
     if (typeof window !== "undefined") {
       //   container = containerRef.current
 
-      let textGeo, textMesh, textMaterial
       const width = window.innerWidth
       const height = window.innerHeight
       canvas = document.createElement("canvas")
@@ -152,19 +151,18 @@ const LandingPageComponent = () => {
       }, 15000)
       return () => {
         scramble("")
+        setStartShow(false)
       }
     }
   }, [startShow])
 
-  // Run the functions
   let playTimeout
   const playAudioSnippet = (start, end) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = start // Set the start time
+    if (audioRef.current && startShow === true) {
+      audioRef.current.currentTime = start
       audioRef.current.play()
 
-      // Calculate duration and stop playback
-      const duration = (end - start) * 1000 // Convert seconds to milliseconds
+      const duration = (end - start) * 1000
       playTimeout = setTimeout(() => {
         audioRef.current.pause()
       }, duration)
@@ -173,7 +171,7 @@ const LandingPageComponent = () => {
   const stopAudio = () => {
     if (audioRef.current) {
       audioRef.current.pause()
-      clearTimeout(playTimeout) // Clear timeout if the user stops the audio
+      clearTimeout(playTimeout)
     }
   }
   useEffect(() => {

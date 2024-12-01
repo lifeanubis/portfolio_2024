@@ -2,7 +2,7 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 
 import { earthMesh } from "./earthScene"
@@ -12,20 +12,34 @@ import { jupiterMesh } from "./jupiterScene"
 import { saturnMesh, asteroidGeometry, asteroidMaterial } from "./saturnScene"
 
 import { sunMesh, sunMaterial } from "./sunScene"
+import {
+  portalGeometry,
+  portalMaterial,
+  portalMesh,
+  innerPortalMesh,
+  innerPortalMaterial,
+} from "./portalScene"
 
 import * as CANNON from "cannon-es"
 
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import gsap from "gsap"
+import { useRouter } from "next/navigation"
 
 const SolarSystemModule = () => {
   const [loader, setloader] = useState(false)
+  const [prompt, setPrompt] = useState(false)
+
+  const router = useRouter()
+  const rendererRef = useRef(null)
+  const animationIdRef = useRef(null)
+  let scene, group, canvas, renderer
+  const audioRef = useRef(null)
 
   setTimeout(() => {
     setloader(true)
   }, 4000)
-
-  useEffect(() => {
+  const threeUi = () => {
     if (
       typeof window !== "undefined" &&
       asteroidMaterial &&
@@ -35,11 +49,12 @@ const SolarSystemModule = () => {
       sunMesh &&
       earthMesh &&
       saturnMesh &&
+      portalMesh &&
       loader === true
     ) {
       const width = window.innerWidth
       const height = window.innerHeight
-      const canvas = document.createElement("canvas")
+      canvas = document.createElement("canvas")
       canvas.height = height
       canvas.width = width
 
@@ -48,42 +63,24 @@ const SolarSystemModule = () => {
       })
       const timeStamp = 1 / 60
 
-      const scene = new THREE.Scene()
-      const group = new THREE.Group()
+      scene = new THREE.Scene()
+      group = new THREE.Group()
       const textureLoader = new THREE.TextureLoader()
 
       const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-      const renderer = new THREE.WebGLRenderer()
+      renderer = new THREE.WebGLRenderer()
       renderer.setSize(width, height)
       camera.position.z = -40
-      // set(cam_posx, cam_posy, cam_posz)
+      rendererRef.current = renderer
 
       document.body.appendChild(renderer.domElement)
 
-      // const LatheGeometry = new THREE.BoxGeometry(5, 1, 1)
-      // const Lathematerial = new THREE.MeshStandardMaterial({
-      //   // wireframe: true,
-      //   // emissive: "red",
-      //   // emissiveIntensity: 1,
-      //   // color: "red",
-      // })
       const controls = new OrbitControls(camera, renderer.domElement)
 
       const pointLight = new THREE.PointLight(0xff09107, 1, 0, 0)
       const pointLightStar = new THREE.PointLight("cyan", 15, 10, 0)
 
       const ambientLight = new THREE.AmbientLight("white", 1)
-
-      // scene.background = new THREE.Color().setHSL(
-      //   0.821,
-      //   0.9,
-      //   0.05,
-      //   THREE.SRGBColorSpace
-      // )
-      // const ambientLight = new THREE.AmbientLight("white", 5)
-      // scene.add(ambientLight)
-      // ambientLight.position.z = -12
-      // group.add(pointLight)
 
       textureLoader.load(
         "./model/galaxy/galaxy_texture.jpg",
@@ -93,12 +90,7 @@ const SolarSystemModule = () => {
         }
       )
 
-      // const lathe = new THREE.Mesh(LatheGeometry, Lathematerial)
       const time = new THREE.Clock()
-      // lathe.add(pointLightStar)
-      // lathe.add(pointLight)
-      // scene.add(pointLight)
-      // let saturn = earthMesh.clone()
 
       const ref = []
       // const astroRef = []
@@ -181,8 +173,6 @@ const SolarSystemModule = () => {
       // }
 
       ////////////////////////////////
-      // group.add(lathe)
-      // earthMesh.add(pointLight)
       // if (earthMaterial && earthGeometry && earthMesh) {
       const saturnBody = new CANNON.Body({
         shape: new CANNON.Sphere(5),
@@ -197,16 +187,27 @@ const SolarSystemModule = () => {
         jupiterMesh &&
         sunMesh &&
         earthMesh &&
-        saturnMesh
+        saturnMesh &&
+        portalMesh &&
+        innerPortalMesh
       ) {
         group.add(saturnMesh)
         group.add(jupiterMesh)
         group.add(sunMesh)
         group.add(marsMesh)
         group.add(earthMesh)
+        group.add(portalMesh)
+        group.add(innerPortalMesh)
+
         world.addBody(saturnBody)
         marsMesh.position.set(-200, 0, -15)
         sunMesh.position.set(0, 0, 4)
+        portalMesh.position.set(-180, 0, 0)
+        portalMesh.rotation.set(0, -Math.PI / 2, 0)
+
+        innerPortalMesh.position.set(-180, 0, 0)
+        innerPortalMesh.rotation.set(0, -Math.PI / 2, 0)
+
         earthMesh?.position.set(100, 0, 0)
         saturnBody.position.set(200, 0, 50)
       }
@@ -240,21 +241,19 @@ const SolarSystemModule = () => {
           })
           .to(camera.position, {
             y: 40,
-            // delay: 2,
             duration: 4.0,
           })
           .to(camera.position, {
             y: 10,
             x: 610,
             z: 1,
-            // delay: 2,
             duration: 4.0,
           })
           .add("start")
           .to(
             model.position,
             {
-              x: 40,
+              x: -40,
               duration: 15.0,
             },
             "start"
@@ -262,15 +261,34 @@ const SolarSystemModule = () => {
           .to(
             camera.position,
             {
-              x: 70,
-              duration: 20.0,
+              x: 40,
+              duration: 17.0,
             },
             "start"
           )
+          .to(camera.position, {
+            x: 0,
+            y: 60,
+            z: 170,
+            duration: 20.0,
+          })
       })
 
-      /////////////////// ship render
+      const shipMoveControlls = () => {}
 
+      /////////////////// ship render
+      document.addEventListener("keydown", (event) => {
+        const step = 5.0 // Movement step
+        switch (event.key) {
+          case "ArrowUp":
+            model.position.x -= step // Move model backward
+            // Move cube forward
+            break
+          case "ArrowDown":
+            model.position.x += step // Move model backward
+            break
+        }
+      })
       // const axisHelper = new THREE.AxesHelper(200)
 
       // scene.add(axisHelper)
@@ -281,6 +299,9 @@ const SolarSystemModule = () => {
         sunMesh.rotation.y += 0.0005
 
         sunMaterial.uniforms.time.value = time * 0.005
+        portalMaterial.uniforms.uTime.value = time * 0.005
+        innerPortalMaterial.uniforms.uTime.value = time * 0.005
+
         saturnBody.angularVelocity.y += 0.00005
         earthMesh.rotation.y += 0.01
         marsMesh.rotation.y += 0.01
@@ -294,21 +315,6 @@ const SolarSystemModule = () => {
           duration: 2,
           onUpdate: () => camera.lookAt(sunMesh.position),
         })
-        // .to(camera.position, {
-        //   x: mars.position.x - 4,
-        //   duration: 4,
-        //   onUpdate: () => camera.lookAt(mars.position),
-        // })
-        // .to(camera.position, {
-        //   z: mars.position.z,
-        //   duration: 4,
-        //   onUpdate: () => camera.lookAt(mars.position),
-        // })
-        // .to(camera.position, {
-        //   z: 16,
-        //   duration: 4,
-        //   onUpdate: () => camera.lookAt(saturnBody.position),
-        // })
       }
       controls.enableDamping = true
       controls.dampingFactor = 0.009
@@ -336,7 +342,7 @@ const SolarSystemModule = () => {
       //     quaternions rotation
 
       const animate = (time) => {
-        requestAnimationFrame(animate)
+        animationIdRef.current = requestAnimationFrame(animate)
 
         sunMovement(time)
         world.step(timeStamp)
@@ -352,18 +358,88 @@ const SolarSystemModule = () => {
         addAsteroid().updateAstro()
         controls.update()
         renderer.render(scene, camera)
+        if (
+          model &&
+          model.position.x !== undefined &&
+          model.position.x <= -185
+        ) {
+          router.push("/projects")
+        }
       }
-
       animate()
     }
+  }
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      asteroidMaterial &&
+      asteroidGeometry &&
+      marsMesh &&
+      jupiterMesh &&
+      sunMesh &&
+      earthMesh &&
+      saturnMesh &&
+      portalMesh &&
+      loader === true
+    ) {
+      threeUi()
+      return () => {
+        cancelAnimationFrame(animationIdRef.current) // Stop animation
+
+        renderer?.dispose() // Dispose renderer
+        if (document.body) {
+          document.body.removeChild(renderer?.domElement) // Remove canvas
+        }
+        console.log("Three.js scene cleaned up.")
+      }
+    }
   }, [loader])
-  return (
-    loader === false && (
-      <h1 className="bg-gray-700 w-full h-screen text-white flex justify-center pt-52  text-4xl ">
+  let playTimeout
+  const playAudioSnippet = (start, end) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = start // Set the start time
+      audioRef.current.play()
+
+      // Calculate duration and stop playback
+      const duration = (end - start) * 1000 // Convert seconds to milliseconds
+      playTimeout = setTimeout(() => {
+        audioRef.current.pause()
+      }, duration)
+    }
+  }
+  useEffect(() => {
+    playAudioSnippet(1, 20)
+  }, [loader])
+
+  setTimeout(() => {
+    setPrompt(true)
+  }, 40000)
+
+  if (loader === false) {
+    return (
+      <h1 className="bg-black w-full h-screen glow-text text-sky-500  font-bold flex justify-center pt-52  text-4xl ">
         loading.... assets
       </h1>
     )
-  )
+  }
+
+  if (loader === true) {
+    return (
+      <>
+        <audio autoPlay loop>
+          <source src="/sounds/space.mp3" type="audio/mp3" />
+        </audio>
+        {prompt && (
+          <div className="absolute top-20 right-0 btn-glow-yes ">
+            <p className="text-white font-bold tracking-widest">
+              click up arrow key to enter portal
+            </p>
+          </div>
+        )}
+      </>
+    )
+  }
 }
 
 export default SolarSystemModule

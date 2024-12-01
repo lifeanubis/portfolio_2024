@@ -8,8 +8,8 @@ body {
   height: 100vh;
 }
 .glow-text {
-  @apply text-white;
-  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+  text-shadow: 0 10px 10px #00ff00, 0 10px 20px #00ff00, 0 10px 30px #00ff00;
+  letter-spacing: 0.5rem;
 }
 .btn-glow-yes {
   box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00;
