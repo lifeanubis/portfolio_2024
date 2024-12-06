@@ -383,6 +383,8 @@ const SolarSystemModule = () => {
       portalMesh &&
       loader === true
     ) {
+      router.prefetch("/projects")
+
       threeUi()
       return () => {
         cancelAnimationFrame(animationIdRef.current) // Stop animation

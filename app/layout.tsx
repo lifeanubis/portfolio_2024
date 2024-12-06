@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
+import NavBarPc from "@/Components/NavBarPc"
+// () => import("@/Components/LandingPageComponent"),
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,37 +31,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} overflow-hidden antialiased`}
       >
-        <div className=" text-white w-full  glow-text   p-4 bg-gradient-to-r from-gray-900 to-black  grid grid-cols-4   ">
-          <div className="   ">
-            <Link href={"/landing"}>
-              <h1 className="cursor-pointer w-max  hover:scale-y-150  font-bold text-lg">
-                intro
-              </h1>
-            </Link>
+        <div className="">
+          <div className="">
+            <NavBarPc />
           </div>
-          <div>
-            <Link href={"/"}>
-              <h1 className="cursor-pointer w-max  hover:scale-y-150  font-bold text-lg">
-                solar
-              </h1>
-            </Link>
-          </div>
-          <div>
-            <Link href={"/projects"}>
-              <h1 className="cursor-pointer w-max hover:scale-y-150  font-bold text-lg">
-                projects
-              </h1>
-            </Link>
-          </div>
-          <div>
-            <Link href={"/resume"}>
-              <h1 className="cursor-pointer w-max hover:scale-y-150   font-bold text-lg">
-                resume
-              </h1>
-            </Link>
-          </div>
+          <div className=" ">{children}</div>
         </div>
-        <div>{children}</div>
       </body>
     </html>
   )

@@ -8,10 +8,9 @@ import gsap from "gsap"
 import { useRouter } from "next/navigation"
 
 const LandingPageComponent = () => {
-  const containerRef = useRef(null)
   const rendererRef = useRef(null)
   const animationIdRef = useRef(null)
-  let scene, group, canvas, renderer, container
+  let scene, group, canvas, renderer
 
   const threeUi = () => {
     if (typeof window !== "undefined") {
@@ -25,10 +24,7 @@ const LandingPageComponent = () => {
 
       scene = new THREE.Scene()
       group = new THREE.Group()
-      const iframeGroup = new THREE.Group()
-      const textGroup = new THREE.Group()
       const loader = new GLTFLoader()
-      let modelR
       // const directional = new THREE.DirectionalLight(0xeb9c50, 20)
 
       const directional = new THREE.DirectionalLight(0xeb9c50, 5)
@@ -54,8 +50,6 @@ const LandingPageComponent = () => {
             x: 20,
             duration: 15.0,
           })
-
-          console.log("Model loaded successfully:", gltf)
         },
         (xhr) => {
           // Progress callback
@@ -138,6 +132,7 @@ const LandingPageComponent = () => {
 
   useEffect(() => {
     if (startShow !== null) {
+      router.prefetch("/")
       scramble("hello there fellow voyager")
       setTimeout(() => {
         scramble("lets begin our journey")
@@ -145,7 +140,6 @@ const LandingPageComponent = () => {
       setTimeout(() => {
         scramble("buckle up")
       }, 12000)
-      router.prefetch("/")
       setTimeout(() => {
         router.push("/")
       }, 15000)
@@ -219,13 +213,13 @@ const LandingPageComponent = () => {
 
   if (startShow !== null) {
     return (
-      <div className="absolute  overflow-y-hidden w-full h-full bg-transparent ">
+      <div className=" absolute w-screen h-screen  overflow-hidden ">
         <img
           src="./model/spaceMan/hero_image.png"
           width={800}
           height={800}
           alt="asdasd"
-          className=" absolute overflow-y-hidden  -left-44 w-[33vw] h-screen  scale-150   "
+          className=" absolute  -left-44 w-[33vw] h-screen  scale-150   "
         />
         <div className="w-full  grid grid-cols-1  text-white p-5 ">
           <div>
