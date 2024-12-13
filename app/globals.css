@@ -10,6 +10,10 @@
 ::-webkit-scrollbar {
   display: none;
 }
+@font-face {
+  font-family: "Pencil";
+  src: url("../public/fonts/Handodle-rg38A.ttf");
+}
 .glow-text {
   text-shadow: 0 10px 10px #00ff00, 0 10px 20px #00ff00, 0 10px 30px #00ff00;
   letter-spacing: 0.5rem;
@@ -37,4 +41,33 @@
 
 .btnContainer:hover {
   box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem rgb(106, 80, 61);
+}
+.carousel {
+  position: relative;
+  width: 100vw; /* Full screen width */
+  height: 100px; /* Image height */
+  overflow: hidden;
+  display: flex;
+}
+
+.carousel-track {
+  display: flex;
+  animation: scroll 10s linear infinite;
+  justify-content: space-between;
+}
+
+.slide {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  gap: 52px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100vw); /* Travel full screen width */
+  }
 }
