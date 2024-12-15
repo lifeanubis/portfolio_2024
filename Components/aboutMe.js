@@ -1,67 +1,109 @@
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useEffect } from "react"
+
 const AboutMe = () => {
+  const first = () => {
+    gsap.registerPlugin(ScrollTrigger)
+    gsap.fromTo(
+      "#notes",
+      {
+        rotate: "-10",
+      },
+      {
+        duration: 5,
+        rotate: "10",
+        ease: "sine",
+        repeat: -1,
+        yoyo: true,
+      }
+    )
+    gsap.fromTo(
+      "#photo",
+      {
+        rotate: "10",
+      },
+      {
+        duration: 5,
+        rotate: "-10",
+        ease: "back.inOut",
+        repeat: -1,
+        yoyo: true,
+      }
+    )
+  }
+
+  useEffect(() => {
+    first()
+  }, [])
+
   return (
-    <div className="bg-[url('/model/resume_assets/notice_board.png')] bg-contain   bg-repeat-round w-full h-[90vh]  ">
-      <div className="grid grid-cols-2  relative gap-10">
-        <div className="text-start  absolute top-3  col-span-1  ">
-          <div className="    text-black bg-[url('/model/resume_assets/photo_frame.jpg')] bg-cover bg-center min-h-80 min-w-80 ">
-            <h1 className="text-black relative top-14  text-center font-bold text-2xl  ">
-              asdasd
-            </h1>
-          </div>
+    <div className="bg-[url('/model/resume_assets/notice_board.png')] bg-contain bg-repeat-round scale-100 xl:scale-100  h-full w-full overflow-hidden ">
+      <div className="grid grid-cols-2  place-content-center   place-items-center ">
+        <div
+          id="photo"
+          className=" col-span-2  font-pencilFont scale-50 xl:scale-125 mt-32   text-black bg-[url('/model/resume_assets/photo_frame.jpg')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          <div className=" col-span-2  font-pencilFont scale-50 xl:scale-75  text-black bg-[url('/model/resume_assets/ss_texture.jpg')] bg-cover bg-center min-h-80 min-w-80 "></div>
         </div>
-        <div className=" absolute top-3 right-2  col-span-1  ">
-          <div className="  font-pencilFont      text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 ">
-            {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
-            <p className="text-black relative top-28  text-center max-w-80 text-wrap font-bold text-lg  ">
-              i like{" "}
-              <h1 className="text-green-800">martial arts , chess, cooking </h1>
-            </p>
-            <p className="relative top-28 text-green-800  text-center max-w-80 text-wrap   text-lg font-semibold ">
-              learning new technologies
-            </p>
-            <p className=" relative top-28  max-w-40 mx-auto text-center text-xl font-semibold text-gray-800  ">
-              i am also very fond of bike rides
-            </p>
-          </div>
+        <div
+          id="notes"
+          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
+            I am a<p className="text-[#6cd8ff]"> MERN stack developer</p>
+          </p>
+          <p className="relative top-28 text-lime-200   max-w-52 mx-auto text-wrap text-center   text-lg font-semibold ">
+            {`with "FOUR YEARS" of experence`}
+          </p>
+          <h3 className=" relative top-28  max-w-40 mx-auto text-center text-xl font-semibold text-gray-800  ">
+            currently serving in
+            <p className="text-zinc-300">{`"fps lounge"`}</p>
+          </h3>
         </div>
-        <div className="text-start  absolute top-3 left-80  col-span-1  ">
-          <div className=" font-pencilFont    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 ">
-            <p className="text-black relative top-40  text-center max-w-96 text-wrap font-bold text-xl  ">
-              I am a<h1 className="text-green-800"> MERN stack developer</h1>
-            </p>
-            <p className=" relative top-40  text-right max-w-80 text-wrap   text-xl font-semibold text-gray-800  ">
-              {`with "FOUR YEARS" of experence`}
-            </p>
-            <p className=" relative top-40  text-center max-w-80 text-wrap   text-xl font-semibold text-gray-800  ">
-              currently serving in
-              <h1 className="text-green-800">fps lounge</h1>
-            </p>
-          </div>
+        <div
+          id="notes"
+          className=" font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
+          <p className="text-slate-700 relative top-20   text-center max-w-full text-wrap font-bold text-lg  ">
+            as a developer i like
+            <br />
+            crafting new products
+            <br />
+            from raw vision and ideas{" "}
+          </p>
         </div>
-        <div className="font-pencilFont text-start  absolute top-64 right-5  col-span-1  ">
-          <div className="    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 ">
-            <div className="    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-96 ">
-              <p className="text-slate-700 relative top-14 text-wrap    text-center font-semibold text-lg  ">
-                as a developer i like
-                <br />
-                crafting new products
-                <br />
-                from raw vision and ideas
-                {/* since my inception in to programming */}
-              </p>
-            </div>
-          </div>
+        <div
+          id="notes"
+          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
+          <p className="text-slate-800 relative top-20 text-nowrap text-center items-center min-w-52 font-bold text-lg  ">
+            completed my graduation in
+            <p className="font-mono">2019</p>
+            from mechanical
+            <br />
+            working as a software
+            <br />
+            developer since then
+          </p>
         </div>
-        <div className="font-pencilFont   absolute top-64 right-64    ">
-          <div className="    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-96 ">
-            <p className="text-slate-700 relative top-14 text-wrap    text-center font-semibold text-lg  ">
-              completed my graduation in
-              <h2 className="font-mono">2019</h2>
-              from mechanical
-              <br />
-              working as a developer since then
-            </p>
-          </div>
+        <div
+          id="notes"
+          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
+          <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
+            i like{" "}
+            <p className="text-[#6cd8ff]">martial arts , chess, cooking </p>
+          </p>
+          <p className="relative top-28 text-[#6cd8ff]  text-center max-w-80 text-wrap text-lg font-semibold ">
+            learning new technologies
+          </p>
+          <p className=" relative top-28  max-w-40 mx-auto text-center text-xl font-semibold text-zinc-700  ">
+            i am also very fond of bike rides
+          </p>
         </div>
       </div>
     </div>

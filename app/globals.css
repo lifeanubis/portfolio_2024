@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  overflow-x: hidden;
-  width: 100%;
-  height: auto;
-} */
 ::-webkit-scrollbar {
   display: none;
 }
@@ -55,7 +50,22 @@
   animation: scroll 10s linear infinite;
   justify-content: space-between;
 }
+table {
+  border: 2rem solid brown;
+  /* border-radius: 20rem; */
+  /* border: 2px solid red; */
+  padding: 10px;
+  border-radius: 25px;
+}
 
+th {
+  border: 0.5rem solid pink;
+  color: salmon;
+}
+td {
+  border: 0.5rem solid pink;
+  color: skyblue;
+}
 .slide {
   width: 100px;
   height: 100px;

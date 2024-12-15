@@ -7,7 +7,10 @@ import AboutMe from "@/Components/aboutMe"
 import MyRoles from "@/Components/myRoles"
 import TechStack from "@/Components/techStack"
 
+import ContactMe from "@/Components/contactMe"
+
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const ResumePageComp = () => {
   const timeLine = gsap.timeline()
@@ -56,10 +59,6 @@ const ResumePageComp = () => {
       })
   }
 
-  useEffect(() => {
-    first()
-  }, [])
-
   const handleScroll = (divName) => {
     const ele = document.getElementById(divName)
     ele.scrollIntoView({
@@ -68,6 +67,7 @@ const ResumePageComp = () => {
       inline: "nearest",
     })
   }
+
   const [currentBg, setCurrentBg] = useState("/model/resume_assets/fair.jpg")
 
   // Array of background images
@@ -90,7 +90,7 @@ const ResumePageComp = () => {
         backgroundImage: `url(${currentBg})`,
         transition: "background 2s",
       }}
-      className="w-full  text-white max-h-[90vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
+      className="w-full  text-white max-h-[92vh] 2xl:max-h-[95vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
     >
       <button
         onClick={handleBackgroundChange}
@@ -103,7 +103,7 @@ const ResumePageComp = () => {
             "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
         }}
       >
-        <Image
+        <img
           src={"/model/resume_assets/bulb_on.png"}
           width={100}
           height={100}
@@ -112,7 +112,7 @@ const ResumePageComp = () => {
       </button>
 
       <div>
-        <Image
+        <img
           src={"/model/resume_assets/wind_mill.png"}
           width={200}
           height={200}
@@ -122,7 +122,7 @@ const ResumePageComp = () => {
         />
       </div>
       <div>
-        <Image
+        <img
           src={"/model/resume_assets/kites.png"}
           width={200}
           height={200}
@@ -147,7 +147,13 @@ const ResumePageComp = () => {
           onClick={() => handleScroll("roles")}
         >
           <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            ROLES
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              PROJECTS
+              <br />
+              and
+              <br />
+              INDUSTRIES
+            </h1>
           </h1>
         </div>
         <div
@@ -156,15 +162,16 @@ const ResumePageComp = () => {
           onClick={() => handleScroll("techStack")}
         >
           <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            EXPERIENCE
+            TECHSTACK
           </h1>
         </div>
         <div
           className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
           id="board"
+          onClick={() => handleScroll("contact")}
         >
           <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            INTERESTS
+            CONTACT ME
           </h1>
         </div>
         <div
@@ -178,7 +185,6 @@ const ResumePageComp = () => {
             <br />
             INDUSTRIES
           </h1>
-          <br />
         </div>
         <div
           className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
@@ -222,6 +228,9 @@ const ResumePageComp = () => {
       </div>
       <div id="techStack">
         <TechStack />
+      </div>
+      <div id="contact">
+        <ContactMe />
       </div>
     </div>
   )
