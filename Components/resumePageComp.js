@@ -15,8 +15,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 const ResumePageComp = () => {
   const timeLine = gsap.timeline()
   gsap.registerPlugin(ScrollToPlugin)
-  const sectionsRef = useRef([])
-  const currentIndexRef = useRef(0)
   const first = () => {
     gsap.from("#kites", {
       y: 0,
@@ -59,6 +57,10 @@ const ResumePageComp = () => {
       })
   }
 
+  useEffect(() => {
+    first()
+  }, [])
+
   const handleScroll = (divName) => {
     const ele = document.getElementById(divName)
     ele.scrollIntoView({
@@ -70,13 +72,9 @@ const ResumePageComp = () => {
 
   const [currentBg, setCurrentBg] = useState("/model/resume_assets/fair.jpg")
 
-  // Array of background images
   const backgrounds = [
     "/model/resume_assets/fair.jpg",
     "/model/resume_assets/night_fair.png",
-
-    // '/api/placeholder/1920/1080', // Replace with your actual second image path
-    // '/api/placeholder/1920/1080', // Replace with your actual third image path
   ]
 
   const handleBackgroundChange = () => {
@@ -103,7 +101,7 @@ const ResumePageComp = () => {
             "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
         }}
       >
-        <img
+        <Image
           src={"/model/resume_assets/bulb_on.png"}
           width={100}
           height={100}
@@ -112,7 +110,7 @@ const ResumePageComp = () => {
       </button>
 
       <div>
-        <img
+        <Image
           src={"/model/resume_assets/wind_mill.png"}
           width={200}
           height={200}
@@ -122,7 +120,7 @@ const ResumePageComp = () => {
         />
       </div>
       <div>
-        <img
+        <Image
           src={"/model/resume_assets/kites.png"}
           width={200}
           height={200}

@@ -1,14 +1,52 @@
+/* eslint-disable @next/next/no-img-element */
 import "@lottiefiles/dotlottie-wc"
+import { useRef, useState } from "react"
 
 const ContactMe = () => {
+  const audioRefPhone = useRef(null)
+
+  const [hover, setHover] = useState(false)
+
+  const playAudioSnippet = () => {
+    audioRefPhone.current.play()
+  }
+  const stopAudioSnippet = () => {
+    audioRefPhone.current.pause()
+  }
+
   return (
-    <div className="w-full h-full  items-center mt-60 place-items-end grid grid-cols-4 ">
-      <div className="w-full  ">
+    <div className="w-full h-full  items-center mt-60 place-items-end grid grid-cols-4 cursor-pointer ">
+      <audio ref={audioRefPhone}>
+        <source src="/sounds/phone.mp3" type="audio/mp3" />
+      </audio>
+
+      <div
+        className="w-full  "
+        onMouseEnter={() => {
+          playAudioSnippet()
+          setHover(true)
+        }}
+        onMouseLeave={() => {
+          stopAudioSnippet()
+          setHover(false)
+        }}
+      >
+        <div
+          className={`${
+            hover === true ? "scale-100 duration-1000" : "scale-0 duration-1000"
+          } text-black text-center -mt-10   font-bold text-3xl   font-mono  mx-auto  `}
+        >
+          +91 7049766754
+        </div>
         <dotlottie-wc
           src="https://lottie.host/92952044-2e16-4628-b9ce-56d6ed2a15f8/ZxMnC0roqA.lottie"
           autoplay
           loop
         ></dotlottie-wc>
+
+        <div className=" text-black text-center -mt-10  font-bold text-3xl animate-pulse   font-pencilFont  mx-auto    ">
+          HOVER
+        </div>
       </div>
 
       <div className="cursor-pointer w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
@@ -19,7 +57,6 @@ const ContactMe = () => {
           alt="/model/resume_assets/direction.png"
           className="w-20 h-20 relative   bottom-1/4 cursor-pointer bg-green-800/20 p-2 rounded-full  hover:scale-90 hover:drop-shadow-2xl hover:shadow-2xl hover:translate-x-5  shadow-inner transition-all ease-out duration-500"
         />
-        {/* <div className="w-20 h-20 relative bottom-1/4    cursor-pointer bg-green-800/20 p-2 rounded-full  hover:scale-90 hover:drop-shadow-2xl hover:shadow-2xl hover:translate-x-5  shadow-inner transition-all ease-out duration-500"></div> */}
       </div>
 
       <a href="https://www.w3schools.com" target="_blank">
@@ -33,7 +70,6 @@ const ContactMe = () => {
           />
         </div>
       </a>
-      {/* <div className="w-20 h-20 relative   bottom-1/4 cursor-pointer bg-green-800/20 p-2 rounded-full  hover:scale-90 hover:drop-shadow-2xl hover:shadow-2xl hover:translate-x-5  shadow-inner transition-all ease-out duration-500"></div> */}
 
       <div className="cursor-pointer w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
         <img
@@ -43,7 +79,6 @@ const ContactMe = () => {
           alt="/model/resume_assets/direction.png"
           className="w-20 h-20 relative   bottom-1/4 cursor-pointer bg-green-800/20 p-2 rounded-full  hover:scale-90 hover:drop-shadow-2xl hover:shadow-2xl hover:translate-x-5  shadow-inner transition-all ease-out duration-500"
         />
-        {/* <div className="w-20 h-20 relative   bottom-1/4 cursor-pointer bg-green-800/20 p-2 rounded-full  hover:scale-90 hover:drop-shadow-2xl hover:shadow-2xl hover:translate-x-5  shadow-inner transition-all ease-out duration-500"></div> */}
       </div>
     </div>
   )

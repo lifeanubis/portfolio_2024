@@ -1,13 +1,14 @@
-import { Canvas, useFrame } from "@react-three/fiber"
+/* eslint-disable @next/next/no-img-element */
 import gsap from "gsap"
 import { useEffect, useRef, useState } from "react"
 
 const TechStack = () => {
-  const techRef = useRef(null)
   const refs = useRef([])
 
+  const [screenSize, setScreenSize] = useState(1250)
+
   const timeLine = gsap.timeline()
-  const imageList = [
+  const imgList = [
     {
       src: "/model/resume_assets/typescript.svg",
       text: "Typescript reduces bugs and improve code",
@@ -21,7 +22,7 @@ const TechStack = () => {
       text: "firebase is an easy solution for fast back-end dev",
     },
     {
-      src: "/model/resume_assets/github.svg",
+      src: "/model/resume_assets/git.svg",
       text: "git ensures seamless cordination between teams ensures code continuty",
     },
     {
@@ -61,6 +62,8 @@ const TechStack = () => {
   useEffect(() => {
     let speed = 2 // Pixels per second
 
+    // console.log(window.screen.availWidth, "----------")
+    setScreenSize(window.screen.availWidth)
     const popoMo = (ele) => {
       gsap.to(`#popoMo${ele} p`, {
         scale: 2,
@@ -100,7 +103,9 @@ const TechStack = () => {
       })
     }
     const elements = document.querySelectorAll("#tech_item")
-    const positions = Array.from(elements).map(() => -window.innerWidth)
+    const positions = Array.from(elements).map(() =>
+      screenSize < 1250 ? -window.innerWidth * 11 : -window.innerWidth * 3
+    )
 
     gsap.ticker.add(() => {
       const delta = gsap.ticker.deltaRatio() // Get frame time delta ratio
@@ -120,30 +125,40 @@ const TechStack = () => {
         element.style.transform = `translateX(${positions[index]}px)`
 
         if (positions[index] > window.innerWidth) {
-          positions[index] = -window.innerWidth * 2.5
+          positions[index] =
+            screenSize < 1250 ? -window.innerWidth * 11 : -window.innerWidth * 3
         }
       })
     })
-  }, [])
+  }, [screenSize])
 
   return (
     <div className="w-full h-screen  backdrop-blur-sm  ">
       <div className="z-50   flex justify-center   w-full h-full ">
         <img
+          width={1200}
+          height={1200}
           src="/model/resume_assets/tv_frame.png"
           alt="asdasd"
           className="w-[50rem] h-[35rem] z-50 "
         />
       </div>
       <div className="-z-10  items-center  w-full flex justify-between gap-60 ">
-        {imageList.map((item, index) => (
+        {imgList.map((item, index) => (
           <div
+            key={index}
             id="tech_item"
             ref={(el) => (refs.current[index] = el)}
-            className="-mt-[40rem]"
+            className="-mt-[65rem] lg:-mt-[40rem] "
           >
             <div id={`popoMo${index}`} className="">
-              <img src={item.src} alt="asdasd" className=" w-full  h-20" />
+              <img
+                width={200}
+                height={200}
+                src={item?.src}
+                alt="asdasd"
+                className=" w-full  h-20"
+              />
               <p className="font-semibold  text-center w-[10rem]     font-pencilFont  text-xs p-2">
                 {item?.text}
               </p>
@@ -151,16 +166,6 @@ const TechStack = () => {
           </div>
         ))}
       </div>
-      {/* <div
-        style={{
-          background: "rgb(2,0,36)",
-          background:
-            "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(121,9,101,0) 35%, rgba(0,212,255,1) 100%)",
-        }}
-        className="  w-52 h-52"
-      >
-        asd
-      </div> */}
     </div>
   )
 }
