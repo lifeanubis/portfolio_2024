@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 export default function NavBarPc({}) {
   const router = usePathname()
   return (
-    <div className=" text-white w-full relative   glow-text h-full   p-4 bg-gradient-to-r from-gray-900 to-black  grid grid-cols-4   ">
+    <div className=" text-white w-full relative  tracking-widest  h-full   p-4 bg-gradient-to-r from-gray-900 to-black  grid grid-cols-4  place-items-center">
       <div className="   ">
         <Link href={"/landing"}>
           <h1
@@ -16,7 +16,7 @@ export default function NavBarPc({}) {
                 : ""
             } `}
           >
-            intro
+            site intro
           </h1>
         </Link>
       </div>
@@ -29,7 +29,7 @@ export default function NavBarPc({}) {
                 : ""
             } `}
           >
-            solar
+            deep space
           </h1>
         </Link>
       </div>

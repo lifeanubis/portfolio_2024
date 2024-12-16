@@ -42,13 +42,31 @@ const AboutMe = () => {
       <div className="grid grid-cols-2  place-content-center   place-items-center ">
         <div
           id="photo"
-          className=" col-span-2  font-pencilFont scale-50 xl:scale-125 mt-32   text-black bg-[url('/model/resume_assets/photo_frame.jpg')] bg-cover bg-center min-h-80 min-w-80 "
+          className="font-pencilFont scale-75 xl:scale-125 mt-32   text-black bg-[url('/model/resume_assets/photo_frame.jpg')] bg-cover bg-center min-h-80 min-w-80 "
         >
-          <div className=" col-span-2  font-pencilFont scale-50 xl:scale-75  text-black bg-[url('/model/resume_assets/ss_texture.jpg')] bg-cover bg-center min-h-80 min-w-80 "></div>
+          <div className=" col-span-2  font-pencilFont scale-75 xl:scale-75  text-black bg-[url('/model/resume_assets/ss_texture.jpg')] bg-cover bg-center min-h-80 min-w-80 "></div>
         </div>
         <div
           id="notes"
-          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
+          className="  font-pencilFont scale-75 xl:scale-125 tracking-widest    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
+        >
+          <h3 className="text-zinc-800 relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
+            my name is
+          </h3>
+          <h1 className="text-zinc-800 relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
+            SHREYANSH SHARMA
+            <br />
+            you can call me
+            <br />
+            :-shrey-:
+          </h1>
+          <h3 className="text-zinc-800 relative top-28    text-center max-w-full text-wrap font-bold text-lg  ">
+            I am from "India"
+          </h3>
+        </div>
+        <div
+          id="notes"
+          className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
           <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
             I am a<p className="text-[#6cd8ff]"> MERN stack developer</p>
@@ -63,7 +81,7 @@ const AboutMe = () => {
         </div>
         <div
           id="notes"
-          className=" font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
+          className=" font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
           {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
           <p className="text-slate-700 relative top-20   text-center max-w-full text-wrap font-bold text-lg  ">
@@ -76,7 +94,7 @@ const AboutMe = () => {
         </div>
         <div
           id="notes"
-          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
+          className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
           {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
           <p className="text-slate-800 relative top-20 text-nowrap text-center items-center min-w-52 font-bold text-lg  ">
@@ -91,7 +109,7 @@ const AboutMe = () => {
         </div>
         <div
           id="notes"
-          className="  font-pencilFont scale-50 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
+          className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
           {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
           <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">

@@ -101,12 +101,18 @@ const ResumePageComp = () => {
             "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
         }}
       >
+        {currentBg.includes("jpg") && <h1 className="text-black">enter</h1>}
+
         <Image
           src={"/model/resume_assets/bulb_on.png"}
           width={100}
           height={100}
           alt="sdfsdf"
         />
+
+        {currentBg.includes("jpg") && (
+          <h1 className="text-black">night mode</h1>
+        )}
       </button>
 
       <div>

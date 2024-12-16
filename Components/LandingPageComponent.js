@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import gsap from "gsap"
 
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 const LandingPageComponent = () => {
   const rendererRef = useRef(null)
@@ -111,7 +112,7 @@ const LandingPageComponent = () => {
             tempString[index] = item
             setAlterText(tempString?.join(""))
           }, 75)
-        }, (index + 1) * 150)
+        }, (index + 1) * 75)
       })
     }, 75)
   }
@@ -136,13 +137,13 @@ const LandingPageComponent = () => {
       scramble("hello there fellow voyager")
       setTimeout(() => {
         scramble("lets begin our journey")
-      }, 7000)
+      }, 3500)
       setTimeout(() => {
         scramble("buckle up")
-      }, 12000)
+      }, 6000)
       setTimeout(() => {
         router.push("/")
-      }, 15000)
+      }, 9000)
       return () => {
         scramble("")
         setStartShow(false)
@@ -169,6 +170,10 @@ const LandingPageComponent = () => {
     }
   }
   useEffect(() => {
+    // if (startShow === false) {
+    //   stopAudio()
+    // }
+    // else
     playAudioSnippet(1, 20)
   }, [startShow])
 
@@ -176,8 +181,8 @@ const LandingPageComponent = () => {
     return (
       <div className="absolute overflow-hidden  w-screen h-screen  bg-[url('/model/galaxy/galaxy_texture.jpg')] bg-cover bg-center ">
         <div>
-          <img
-            src="./model/spaceMan/hero_image.png"
+          <Image
+            src="/model/spaceMan/hero_image.png"
             width={800}
             height={800}
             alt="asdasd"
@@ -185,24 +190,43 @@ const LandingPageComponent = () => {
           />
         </div>
         <div className="text-center mt-10 place-self-center gap-10 text-white font-bold  grid grid-cols-1">
-          <div className="w-full  btn-glow-yes  rounded-lg  ">
+          <div
+            className="w-full  p-10  text-black/60 rounded-lg  "
+            style={{
+              background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+            }}
+          >
             <h1 className="">Do you want to play audio?</h1>
           </div>
+          <audio ref={audioRef}>
+            <source src="/sounds/typing.mp3" type="audio/mp3" />
+          </audio>
           <div className="w-full h-full ">
             <button
-              className="btn-glow-yes"
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-10 rounded-full hover:scale-75 text-black/60 duration-300"
               onClick={() => {
                 setStartShow(true)
               }}
             >
               YES
             </button>
-            <audio ref={audioRef}>
-              <source src="/sounds/typing.mp3" type="audio/mp3" />
-            </audio>
           </div>
           <div className="w-full h-full ">
-            <button className="btn-glow-no" onClick={() => setStartShow(false)}>
+            <button
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-10 rounded-full hover:scale-75 text-black/60 duration-300  "
+              onClick={() => {
+                setStartShow(false)
+                audioRef.current.pause()
+
+                // stopAudio()
+              }}
+            >
               NO{" "}
             </button>
           </div>
@@ -214,8 +238,8 @@ const LandingPageComponent = () => {
   if (startShow !== null) {
     return (
       <div className=" absolute w-screen h-screen  overflow-hidden ">
-        <img
-          src="./model/spaceMan/hero_image.png"
+        <Image
+          src="/model/spaceMan/hero_image.png"
           width={800}
           height={800}
           alt="asdasd"
@@ -223,10 +247,7 @@ const LandingPageComponent = () => {
         />
         <div className="w-full  grid grid-cols-1  text-white p-5 ">
           <div>
-            {/* <div class="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent"> */}
-
             <h1 className="text-4xl tracking-widest  leading-10 glow-text font-bold  w-full h-full flex justify-end">
-              {/* <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-400 via-white to-blue-500 bg-clip-text text-transparent w-full h-full flex justify-end"> */}
               {alterText}
             </h1>
           </div>
@@ -236,12 +257,21 @@ const LandingPageComponent = () => {
           </audio>
           <div className="text-lg font text-white right-0 w-full  flex gap-10 mt-16 justify-end">
             <button
-              className="btn-glow-yes"
-              onClick={() => playAudioSnippet(1, 12)}
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-5 rounded-full hover:scale-75 text-black/60 duration-300  "
+              onClick={() => audioRef.current.play()}
             >
               Play audio
             </button>
-            <button className="btn-glow-no" onClick={() => stopAudio()}>
+            <button
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-5 rounded-full hover:scale-75 text-black/60 duration-300  "
+              onClick={() => stopAudio()}
+            >
               Stop Audio
             </button>
           </div>

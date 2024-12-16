@@ -21,38 +21,33 @@ const MyRoles = () => {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // When div comes into view
-          if (entry.isIntersecting) {
-            // Animate to 100% width
-            console.log(entry.target.id, "45a45d545a4sd")
+    if (window.screen.availWidth <= 800) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setDivId(entry.target.id)
+            }
+          })
+        },
+        {
+          threshold: 0.2, // Trigger when 10% visible
+          rootMargin: "50px", // Start animation 50px before element comes into view
+        }
+      )
 
-            setDivId(entry.target.id)
-          } else {
-            // Reset when out of view
-            setDivId("")
-          }
-        })
-      },
-      {
-        threshold: 0.5, // Trigger when 10% visible
-        rootMargin: "50px", // Start animation 50px before element comes into view
-      }
-    )
-
-    if (divRef.current.length > 0) {
-      divRef.current?.map((item) => {
-        observer.observe(item)
-      })
-    }
-
-    return () => {
       if (divRef.current.length > 0) {
         divRef.current?.map((item) => {
           observer.observe(item)
         })
+      }
+
+      return () => {
+        if (divRef.current.length > 0) {
+          divRef.current.map((item) => {
+            observer.observe(item)
+          })
+        }
       }
     }
   }, [])
@@ -66,11 +61,11 @@ const MyRoles = () => {
         <div
           ref={(el) => (divRef.current[0] = el)}
           id="item-1"
-          className={` h-[40rem] ${
+          className={` h-[50rem] pt-36 ${
             divId === "item-1"
-              ? "scale-100 duration-1000"
-              : "scale-0 duration-1000"
-          }  bg-center bg-cover pt-32  bg-[url('/model/resume_assets/black_board.png')]`}
+              ? "scale-100 duration-1000 "
+              : "scale-0 duration-1000 "
+          }  bg-center bg-cover   bg-[url('/model/resume_assets/black_board.png')]`}
         >
           <div id="title">
             e-sports
@@ -100,11 +95,11 @@ const MyRoles = () => {
         </div>
         <div
           id="item-2"
-          className={` h-[40rem]  ${
+          className={`   h-[50rem] pt-36 ${
             divId === "item-2"
-              ? "scale-100 duration-1000"
-              : "scale-0 duration-1000"
-          } bg-center bg-cover pt-32  bg-[url('/model/resume_assets/black_board.png')]`}
+              ? "scale-100 duration-1000 "
+              : "scale-0 duration-1000 "
+          } bg-center bg-cover  bg-[url('/model/resume_assets/black_board.png')]`}
           ref={(el) => (divRef.current[1] = el)}
         >
           <div id="title">
@@ -132,11 +127,11 @@ const MyRoles = () => {
         </div>
         <div
           id="item-3"
-          className={`h-[40rem] ${
+          className={` h-[50rem] pt-36 ${
             divId === "item-3"
-              ? "scale-100 duration-1000"
-              : "scale-0 duration-1000"
-          } bg-center bg-cover pt-32  bg-[url('/model/resume_assets/black_board.png')]`}
+              ? "scale-100 duration-1000 "
+              : "scale-0 duration-1000 "
+          } bg-center bg-cover  bg-[url('/model/resume_assets/black_board.png')]`}
           ref={(el) => (divRef.current[2] = el)}
         >
           <div id="title">
@@ -165,11 +160,11 @@ const MyRoles = () => {
 
         <div
           id="item-4"
-          className={`h-[40rem] ${
+          className={` h-[50rem] pt-36 ${
             divId === "item-4"
-              ? "scale-100 duration-1000"
-              : "scale-0 duration-1000"
-          } bg-center bg-cover pt-32  bg-[url('/model/resume_assets/black_board.png')]`}
+              ? "scale-100 duration-1000 "
+              : "scale-0 duration-1000 "
+          } bg-center bg-cover  bg-[url('/model/resume_assets/black_board.png')]`}
           ref={(el) => (divRef.current[3] = el)}
         >
           <p>

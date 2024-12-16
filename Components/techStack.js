@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from "react"
 const TechStack = () => {
   const refs = useRef([])
 
-  const [screenSize, setScreenSize] = useState(1250)
+  const [screenSize, setScreenSize] = useState(768)
 
-  const timeLine = gsap.timeline()
   const imgList = [
     {
       src: "/model/resume_assets/typescript.svg",
@@ -60,7 +59,7 @@ const TechStack = () => {
   ]
 
   useEffect(() => {
-    let speed = 2 // Pixels per second
+    let speed = screenSize < 768 ? 1 : 2 // Pixels per second
 
     // console.log(window.screen.availWidth, "----------")
     setScreenSize(window.screen.availWidth)
@@ -104,7 +103,7 @@ const TechStack = () => {
     }
     const elements = document.querySelectorAll("#tech_item")
     const positions = Array.from(elements).map(() =>
-      screenSize < 1250 ? -window.innerWidth * 11 : -window.innerWidth * 3
+      screenSize < 768 ? -window.innerWidth * 11 : -window.innerWidth * 3
     )
 
     gsap.ticker.add(() => {
@@ -126,7 +125,7 @@ const TechStack = () => {
 
         if (positions[index] > window.innerWidth) {
           positions[index] =
-            screenSize < 1250 ? -window.innerWidth * 11 : -window.innerWidth * 3
+            screenSize < 768 ? -window.innerWidth * 11 : -window.innerWidth * 3
         }
       })
     })
@@ -134,37 +133,37 @@ const TechStack = () => {
 
   return (
     <div className="w-full h-screen  backdrop-blur-sm  ">
-      <div className="z-50   flex justify-center   w-full h-full ">
-        <img
-          width={1200}
-          height={1200}
-          src="/model/resume_assets/tv_frame.png"
-          alt="asdasd"
-          className="w-[50rem] h-[35rem] z-50 "
-        />
-      </div>
-      <div className="-z-10  items-center  w-full flex justify-between gap-60 ">
-        {imgList.map((item, index) => (
-          <div
-            key={index}
-            id="tech_item"
-            ref={(el) => (refs.current[index] = el)}
-            className="-mt-[65rem] lg:-mt-[40rem] "
-          >
-            <div id={`popoMo${index}`} className="">
-              <img
-                width={200}
-                height={200}
-                src={item?.src}
-                alt="asdasd"
-                className=" w-full  h-20"
-              />
-              <p className="font-semibold  text-center w-[10rem]     font-pencilFont  text-xs p-2">
-                {item?.text}
-              </p>
+      <div className="   flex justify-center  items-baseline    w-full h-full ">
+        <div className="  w-full lg:w-1/2  flex justify-between  items-end gap-60 ">
+          <img
+            width={1200}
+            height={1200}
+            src="/model/resume_assets/tv_frame.png"
+            alt="asdasd"
+            className="z-50 "
+          />
+          {imgList.map((item, index) => (
+            <div
+              key={index}
+              id="tech_item"
+              ref={(el) => (refs.current[index] = el)}
+              className="-z-10 mb-20  xl:mb-52"
+            >
+              <div id={`popoMo${index}`} className="">
+                <img
+                  width={200}
+                  height={200}
+                  src={item?.src}
+                  alt="asdasd"
+                  className=" w-full  h-20"
+                />
+                <p className="font-semibold  text-center w-[10rem]     font-pencilFont  text-xs p-2">
+                  {item?.text}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )
