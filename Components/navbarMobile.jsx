@@ -14,9 +14,9 @@ export default function NavBarMobile({}) {
           <div
             className={`cursor-pointer ${
               router === "/landing"
-                ? "bg-gradient-to-r from-sky-500 to-black rounded-full"
+                ? "bg-gradient-to-r from-sky-500 to-blue-800/5 rounded-full"
                 : ""
-            }  w-1/2`}
+            }  `}
           >
             <dotlottie-wc
               src="https://lottie.host/039fb92f-0d5a-48b8-b6d8-5b1c0150ce7b/uwAaIbz7EI.lottie"
@@ -33,7 +33,7 @@ export default function NavBarMobile({}) {
               router === "/"
                 ? "bg-gradient-to-r from-sky-500 to-black rounded-full"
                 : ""
-            }  w-1/2`}
+            }  `}
           >
             <dotlottie-wc
               src="https://lottie.host/189e67fd-fdaf-4438-8671-8b470e12170d/cPkK3Ny4Bg.lottie"
@@ -50,7 +50,7 @@ export default function NavBarMobile({}) {
               router === "/projects"
                 ? "bg-gradient-to-r from-sky-500 to-black rounded-full"
                 : ""
-            }  w-1/2`}
+            }  `}
           >
             <dotlottie-wc
               src="https://lottie.host/3f542009-a2da-4c06-a488-b73b08918eb1/DUyzzD5Efd.lottie"
@@ -67,7 +67,7 @@ export default function NavBarMobile({}) {
               router === "/resume"
                 ? "bg-gradient-to-r from-sky-500 to-black rounded-full"
                 : ""
-            }  w-1/2`}
+            }  `}
           >
             <dotlottie-wc
               src="https://lottie.host/bf40c5cb-1cb3-4fa5-98a5-7760cd1e05d9/5RQJ1Liznb.lottie"

@@ -8,7 +8,7 @@ let jupiterGeometry, jupiterMaterial, jupiterMesh
 if (typeof window !== "undefined") {
   const textureLoader = new THREE.TextureLoader()
   textureLoader.load("./model/planets/jupiter_texture.jpg", (texture) => {
-    jupiterGeometry = new THREE.IcosahedronGeometry(15, 50)
+    jupiterGeometry = new THREE.IcosahedronGeometry(40, 50)
     jupiterMaterial = new THREE.MeshStandardMaterial({
       // wireframe: true,
       bumpMap: texture,

@@ -200,14 +200,14 @@ const SolarSystemModule = () => {
         world.addBody(saturnBody)
         marsMesh.position.set(-300, 0, -15)
         sunMesh.position.set(0, 0, 4)
-        portalMesh.position.set(-500, 0, 0)
+        portalMesh.position.set(-300, 0, 4)
         portalMesh.rotation.set(0, -Math.PI / 2, 0)
 
-        innerPortalMesh.position.set(-500, 0, 0)
+        innerPortalMesh.position.set(-300, 0, 4)
         innerPortalMesh.rotation.set(0, -Math.PI / 2, 0)
 
-        earthMesh?.position.set(300, 0, 0)
-        saturnBody.position.set(400, 0, 50)
+        earthMesh?.position.set(500, 0, 0)
+        saturnBody.position.set(700, 0, 50)
       }
       ambientLight.position.set(-25, 0, 0)
       // group.children[0].add(ambientLight)
@@ -231,7 +231,7 @@ const SolarSystemModule = () => {
           directional.position.set(300, 200, 0)
           directionalZ.position.set(0, 0, -200)
           model.position.x = 600
-          model.scale.set(0.02, 0.02, 0.02)
+          model.scale.set(0.04, 0.04, 0.04)
           group.add(model)
           timeLine
             .to(model.rotation, {
@@ -253,7 +253,7 @@ const SolarSystemModule = () => {
             .to(
               model.position,
               {
-                x: -40,
+                x: -110,
                 duration: 5.0,
               },
               "start"
@@ -261,7 +261,7 @@ const SolarSystemModule = () => {
             .to(
               camera.position,
               {
-                x: 40,
+                x: 50,
                 duration: 7.0,
               },
               "start"
@@ -269,8 +269,8 @@ const SolarSystemModule = () => {
             .to(camera.position, {
               x: 0,
               y: 60,
-              z: 170,
-              duration: 10.0,
+              z: 270,
+              duration: 5.0,
             })
         },
         (xhr) => {
@@ -286,16 +286,32 @@ const SolarSystemModule = () => {
         }
       )
 
+      const shipper = () => {
+        if (model.position) {
+          gsap.to(model.position, {
+            x: model.position.x - 20.0,
+            duration: 1,
+          })
+        }
+      }
+
+      const shipperBack = () => {
+        if (model.position) {
+          gsap.to(model.position, {
+            x: model.position.x + 20.0,
+            duration: 1,
+          })
+        }
+      }
       /////////////////// ship render
       document.addEventListener("keydown", (event) => {
-        const step = 5.0 // Movement step
         switch (event.key) {
           case "ArrowUp":
-            model.position.x -= step // Move model backward
+            shipper()
             // Move cube forward
             break
           case "ArrowDown":
-            model.position.x += step // Move model backward
+            shipperBack()
             break
         }
       })
@@ -311,9 +327,9 @@ const SolarSystemModule = () => {
 
         sunMaterial.uniforms.time.value = time * 0.005
         portalMaterial.uniforms.uTime.value = time * 0.005
-        innerPortalMaterial.uniforms.uTime.value = time * 0.005
+        innerPortalMaterial.uniforms.uTime.value = time * 0.000005
 
-        saturnBody.angularVelocity.y += 0.00005
+        saturnBody.angularVelocity.y += 0.0005
         earthMesh.rotation.y += 0.01
         marsMesh.rotation.y += 0.01
         jupiterMesh.rotation.y += 0.01
@@ -426,7 +442,7 @@ const SolarSystemModule = () => {
 
   setTimeout(() => {
     setPrompt(true)
-  }, 40000)
+  }, 10000)
 
   if (!modalLoaded || !sunMesh) {
     return (
@@ -439,9 +455,27 @@ const SolarSystemModule = () => {
   if (modalLoaded === true) {
     return (
       <>
-        <audio autoPlay loop>
+        <audio ref={audioRef} autoPlay loop>
           <source src="/sounds/space.mp3" type="audio/mp3" />
         </audio>
+        <div className="absolute top-20 left-0 ">
+          {prompt && (
+            <button
+              // style={{
+              //   background:
+              //     "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              // }}
+              className="p-3 text-xs rounded-full text-white animate-pulse hover:scale-75 font-bold duration-1000"
+              onClick={() => router.push("/projects")}
+            >
+              {" "}
+              hold <br /> {`"UP ARROW"`} <br /> to enter portal
+              <br />
+              or {`"click here"`}
+            </button>
+          )}
+        </div>
+
         <div className="absolute top-20 right-0 ">
           <div className="text-sm   right-0 w-full  flex gap-10  justify-end">
             <button
@@ -458,24 +492,10 @@ const SolarSystemModule = () => {
                 background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
               }}
               className="p-3 rounded-full text-black hover:scale-75 font-bold duration-300  "
-              onClick={() => stopAudio()}
+              onClick={() => audioRef.current.pause()}
             >
               Stop Audio
             </button>
-
-            {prompt && (
-              <div className="">
-                <button
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
-                  }}
-                  className="p-3 text-xs rounded-full text-black hover:scale-75 font-bold duration-300  "
-                >
-                  hold <br /> UP ARROW <br /> to enter portal
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </>

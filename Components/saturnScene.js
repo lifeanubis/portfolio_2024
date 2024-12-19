@@ -18,17 +18,10 @@ if (typeof window !== "undefined") {
     saturnGeometry = new THREE.IcosahedronGeometry(15, 50)
 
     saturnMaterial = new THREE.MeshStandardMaterial({
-      // wireframe: true,
-      // bumpMap: texture,
-      // bumpScale: 20,
       map: texture,
     })
     saturnMesh = new THREE.Mesh(saturnGeometry, saturnMaterial)
     asteroidMesh = new THREE.Mesh(asteroidGeometry, asteroidMaterial)
-
-    //   saturnMesh.rotation.x += 0.1
-    //   saturnMesh.position.y -= 1
-    //   saturnMesh.position.z -= 1
   })
 }
 export {

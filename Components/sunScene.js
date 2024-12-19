@@ -51,7 +51,7 @@ if (typeof window !== "undefined") {
 
   const textureLoader = new THREE.TextureLoader()
   textureLoader.load("./model/sun/sun_texture.jpg", (texture) => {
-    sunGeometry = new THREE.IcosahedronGeometry(50, 100)
+    sunGeometry = new THREE.IcosahedronGeometry(100, 50)
     sunMaterial = new THREE.ShaderMaterial({
       vertexColors: true,
       vertexShader: vertexShader,

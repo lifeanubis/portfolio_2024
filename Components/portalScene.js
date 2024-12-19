@@ -45,8 +45,8 @@ if (typeof window !== "undefined") {
       vec3 innerColor = vec3(1.0, 0.0, 0.0); // Red
   
              float dist = length(vUv * uTime);
-        float glow =  sin(uTime * 0.5) * cos(uTime * 0.5) ;
-             vec3 color = mix(vec3(0.2, 0.7, 0.8), vec3(0.0, 0.1, 0.1), sin( uTime *0.5 ));
+        float glow =  sin(uTime * 0.2) * cos(uTime * 0.2) ;
+             vec3 color = mix(vec3(0.6, 0.0, 0.0), vec3(0.5, 0.52, 0.0), vec3(0.5, 0.52, 0.0) );
    
         gl_FragColor = vec4(color,1.0);
                }
@@ -84,11 +84,11 @@ if (typeof window !== "undefined") {
           uniform float uTime;
       
           void main() {
-              float innerRing = step(0.4, vUv.y); // Adjust 0.4 based on UV mapping
+              float innerRing = step(4.0 , vUv.y); // Adjust 0.4 based on UV mapping
 
-           float dist = length(vUv * uTime);
-           float glow =  sin(uTime * 0.5) * cos(uTime * 0.5) ;
-           vec3 color = mix(vec3(0.1, 0.7, 0.7), vec3(0.0, 0.0, 0.0), sin( uTime * dist * 0.005));
+           float dist = length(vUv * uTime * 0.1);
+           float glow =  sin(uTime * 0.2) * cos(uTime * 0.5) ;
+           vec3 color = mix(vec3(1.0, 0.2, 0.1), vec3(1.0, 0.4, 0.2), ( glow * dist  ));
  
              gl_FragColor = vec4(color, 5.5);
             // Dynamic color based on the wave and UV
