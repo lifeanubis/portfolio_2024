@@ -252,7 +252,7 @@ const LandingPageComponent = () => {
         />
         <div className="w-full  grid grid-cols-1  text-white p-5 ">
           <div>
-            <h1 className="lg:text-3xl text-xl tracking-widest  leading-10 glow-text font-bold  w-full h-full flex justify-end">
+            <h1 className="lg:text-3xl text-lg tracking-widest  leading-10 bg-gradient-to-r from-white via-orange-500  to-red-500 bg-clip-text text-transparent  font-bold  w-full h-full flex justify-end">
               {alterText}
             </h1>
           </div>
@@ -260,12 +260,12 @@ const LandingPageComponent = () => {
           <audio ref={audioRef}>
             <source src="/sounds/typing.mp3" type="audio/mp3" />
           </audio>
-          <div className="lg:text-lg text-sm font text-white right-0 w-full  flex gap-10 mt-16 justify-end">
+          <div className="lg:text-lg text-sm font-bold text-black tracking-widest right-0 w-full  flex gap-10 mt-16 justify-end">
             <button
               style={{
                 background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
               }}
-              className="p-5 rounded-full hover:scale-75 text-black/60 duration-300  "
+              className="p-5 rounded-full  hover:scale-75 text-black/60 duration-300  "
               onClick={() => audioRef.current.play()}
             >
               Play audio

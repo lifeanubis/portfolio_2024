@@ -115,7 +115,7 @@ const TechStack = () => {
 
       elements.forEach((element, index) => {
         if (
-          element.getBoundingClientRect().x > window.innerWidth / 4 &&
+          element.getBoundingClientRect().x > window.innerWidth / 6 &&
           element.getBoundingClientRect().x < window.innerWidth / 2
         ) {
           popoMo(index)
@@ -157,9 +157,9 @@ const TechStack = () => {
               key={index}
               id="tech_item"
               ref={(el) => (refs.current[index] = el)}
-              className="-z-10 mb-20  xl:mb-52"
+              className="-z-10 mb-20   xl:mb-52"
             >
-              <div id={`popoMo${index}`} className="">
+              <div id={`popoMo${index}`} className="scale-50 lg:scale-100">
                 <img
                   width={200}
                   height={200}

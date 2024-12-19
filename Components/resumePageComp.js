@@ -40,9 +40,9 @@ const useDOMLoaded = (callback) => {
 const ResumePageComp = () => {
   const [loaded, setLoaded] = useState(false)
 
-  useDOMLoaded(() => {
-    setLoaded(true)
-  })
+  // useDOMLoaded(() => {
+  //   setLoaded(true)
+  // })
   const timeLine = gsap.timeline()
   gsap.registerPlugin(ScrollToPlugin)
   const first = () => {
@@ -112,6 +112,14 @@ const ResumePageComp = () => {
     setCurrentBg(backgrounds[nextIndex])
   }
 
+  useEffect(() => {
+    const img = new Image()
+    img.src = currentBg
+    img.onload = () => {
+      setLoaded(true)
+    }
+  }, [])
+
   if (!loaded) {
     return (
       <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
@@ -119,156 +127,159 @@ const ResumePageComp = () => {
       </div>
     )
   }
-
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${currentBg})`,
-        transition: "background 2s",
-      }}
-      className="w-full  text-white max-h-[92vh] 2xl:max-h-[95vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
-    >
-      <button
-        onClick={handleBackgroundChange}
-        className={`absolute z-50  top-0  right-4 px-4 py-2   text-white  ${
-          currentBg.includes("night") ? "" : "animate-waving-hand"
-        }    rounded-full`}
+  if (loaded) {
+    return (
+      <div
         style={{
-          background: "rgb(0,33,36)",
-          background:
-            "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
+          backgroundImage: `url(${currentBg})`,
+          transition: "background 2s",
         }}
-        title="switch to night mode"
+        className="w-full   text-white max-h-[92vh] 2xl:max-h-[95vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
       >
-        <img
-          src={"/model/resume_assets/bulb_on.png"}
-          width={100}
-          height={100}
-          alt="sdfsdf"
-        />
-      </button>
+        <button
+          onClick={handleBackgroundChange}
+          className={`absolute z-50  lg:top-5 top-7   right-4 px-4 py-2   text-white  ${
+            currentBg.includes("night") ? "" : "animate-waving-hand"
+          }    rounded-full`}
+          style={{
+            background: "rgb(0,33,36)",
+            background:
+              "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
+          }}
+          title="switch to night mode"
+        >
+          <img
+            src={"/model/resume_assets/bulb_on.png"}
+            width={100}
+            height={100}
+            alt="sdfsdf"
+          />
+        </button>
 
-      <div className="-z-50">
-        <img
-          src={"/model/resume_assets/wind_mill.png"}
-          width={200}
-          height={200}
-          alt="sdfsdf"
-          className="absolute top-1/2 scale-50 "
-          id="wind_mill"
-        />
-      </div>
-      <div className="-z-50">
-        <img
-          src={"/model/resume_assets/kites.png"}
-          width={200}
-          height={200}
-          alt="sdfsdf"
-          className="absolute  right-0  top-1/2 scale-50 "
-          id="kites"
-        />
-      </div>
-      <div className="flex gap-x-10  h-screen    overflow-x-auto ">
-        <div
-          className="cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-          onClick={() => handleScroll("about")}
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            ABOUT ME
-          </h1>
+        <div className="-z-50">
+          <img
+            src={"/model/resume_assets/wind_mill.png"}
+            width={200}
+            height={200}
+            alt="sdfsdf"
+            className="absolute top-1/2 scale-50 "
+            id="wind_mill"
+          />
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-          onClick={() => handleScroll("roles")}
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            PROJECTS
-            <br />
-            and
-            <br />
-            INDUSTRIES
-          </h1>
+        <div className="-z-50">
+          <img
+            src={"/model/resume_assets/kites.png"}
+            width={200}
+            height={200}
+            alt="sdfsdf"
+            className="absolute  right-0  top-1/2 scale-50 "
+            id="kites"
+          />
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-          onClick={() => handleScroll("techStack")}
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            TECHSTACK
-          </h1>
-        </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-          onClick={() => handleScroll("contact")}
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            CONTACT ME
-          </h1>
-        </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-        >
-          <a href="/model/resume_assets/resume.pdf" download>
+        <div className="flex gap-x-1 lg:gap-x-10  h-screen     overflow-x-auto ">
+          <div
+            className="cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+            onClick={() => handleScroll("about")}
+          >
             <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-              DOWNLOAD RESUME
-              <br />
-              PDF
+              ABOUT ME
             </h1>
-          </a>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+            onClick={() => handleScroll("roles")}
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              PROJECTS
+              <br />
+              and
+              <br />
+              INDUSTRIES
+            </h1>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+            onClick={() => handleScroll("techStack")}
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              TECHSTACK
+            </h1>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+            onClick={() => handleScroll("contact")}
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              CONTACT ME
+            </h1>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+          >
+            <a href="/model/resume_assets/resume.pdf" download>
+              <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+                DOWNLOAD
+                <br />
+                RESUME
+                <br />
+                PDF
+              </h1>
+            </a>
+          </div>
+          <div
+          // className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+          // id="board"
+          // onClick={() => handleScroll("techStack")}
+          >
+            {/* <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  "> */}
+            {/* TECH STAK */}
+            {/* </h1> */}
+          </div>
+          {/* <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              TECH STAK
+            </h1>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              TECH STAK
+            </h1>
+          </div>
+          <div
+            className=" cursor-pointer max-h-64 scale-75 lg:scale-100 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
+            id="board"
+          >
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              TECH STAK
+            </h1>
+          </div> */}
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-          onClick={() => handleScroll("techStack")}
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            TECH STAK
-          </h1>
+        <div id="about">
+          <AboutMe />
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            TECH STAK
-          </h1>
+        <div id="roles" className="z-40 relative">
+          <MyRoles />
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            TECH STAK
-          </h1>
+        <div id="techStack">
+          <TechStack />
         </div>
-        <div
-          className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
-          id="board"
-        >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            TECH STAK
-          </h1>
+        <div id="contact">
+          <ContactMe />
         </div>
       </div>
-      <div id="about">
-        <AboutMe />
-      </div>
-      <div id="roles" className="z-40 relative">
-        <MyRoles />
-      </div>
-      <div id="techStack">
-        <TechStack />
-      </div>
-      <div id="contact">
-        <ContactMe />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default ResumePageComp
