@@ -3,7 +3,7 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { useRouter } from "next/navigation"
 import NavBarPc from "@/Components/NavBarPc"
-// () => import("@/Components/LandingPageComponent"),
+import NavBarMobile from "@/Components/navbarMobile"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,11 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-hidden antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-hidden bg-black antialiased`}
       >
         <div className="">
-          <div className="">
+          <div className="hidden lg:block ">
             <NavBarPc />
+          </div>
+          <div className="lg:hidden block  top-0  w-full">
+            <NavBarMobile />
           </div>
           <div className=" ">{children}</div>
         </div>

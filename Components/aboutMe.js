@@ -61,16 +61,17 @@ const AboutMe = () => {
             :-shrey-:
           </h1>
           <h3 className="text-zinc-800 relative top-28    text-center max-w-full text-wrap font-bold text-lg  ">
-            I am from "India"
+            {`I am from "India"`}
           </h3>
         </div>
         <div
           id="notes"
           className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
-          <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
-            I am a<p className="text-[#6cd8ff]"> MERN stack developer</p>
-          </p>
+          <span className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
+            <p className="">I am a</p>
+            <p className="text-[#6cd8ff]"> MERN stack developer</p>
+          </span>
           <p className="relative top-28 text-lime-200   max-w-52 mx-auto text-wrap text-center   text-lg font-semibold ">
             {`with "FOUR YEARS" of experence`}
           </p>
@@ -96,32 +97,30 @@ const AboutMe = () => {
           id="notes"
           className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_yellow.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
-          {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
-          <p className="text-slate-800 relative top-20 text-nowrap text-center items-center min-w-52 font-bold text-lg  ">
-            completed my graduation in
+          <span className="text-slate-800 relative top-20 text-nowrap text-center items-center min-w-52 font-bold text-lg  ">
+            <p className="text-slate-800  text-nowrap text-center items-center min-w-52 font-bold text-lg  ">
+              completed my graduation in
+            </p>
             <p className="font-mono">2019</p>
-            from mechanical
-            <br />
-            working as a software
-            <br />
-            developer since then
-          </p>
+            <p>from mechanical</p>
+            <p>working as a software</p>
+            <p>developer since then</p>
+          </span>
         </div>
         <div
           id="notes"
           className="  font-pencilFont scale-75 xl:scale-125    text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-80 min-w-80 "
         >
-          {/* <div className=" text-black bg-[url('/model/resume_assets/notes_color.png')] bg-cover bg-center min-h-[30rem] min-w-96 "> */}
-          <p className="text-black relative top-28   text-center max-w-full text-wrap font-bold text-lg  ">
-            i like{" "}
+          <span className="text-black relative  top-28   text-center max-w-full text-wrap font-bold text-lg">
+            <p>i like </p>
             <p className="text-[#6cd8ff]">martial arts , chess, cooking </p>
-          </p>
-          <p className="relative top-28 text-[#6cd8ff]  text-center max-w-80 text-wrap text-lg font-semibold ">
-            learning new technologies
-          </p>
-          <p className=" relative top-28  max-w-40 mx-auto text-center text-xl font-semibold text-zinc-700  ">
-            i am also very fond of bike rides
-          </p>
+            <p className=" text-[#6cd8ff]  text-center max-w-80 text-wrap text-lg font-semibold ">
+              learning new technologies
+            </p>
+            <p className="  max-w-40 mx-auto text-center text-xl font-semibold text-zinc-700  ">
+              i am also very fond of bike rides
+            </p>
+          </span>
         </div>
       </div>
     </div>

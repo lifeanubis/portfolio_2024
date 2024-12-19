@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import gsap from "gsap"
-import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import AboutMe from "@/Components/aboutMe"
 import MyRoles from "@/Components/myRoles"
@@ -10,15 +10,43 @@ import TechStack from "@/Components/techStack"
 import ContactMe from "@/Components/contactMe"
 
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import GlobalLoader from "./globalLoader"
+
+const useDOMLoaded = (callback) => {
+  useEffect(() => {
+    const observer = new MutationObserver((mutations, observer) => {
+      if (document.readyState === "complete") {
+        callback()
+        observer.disconnect()
+      }
+    })
+
+    observer.observe(document, {
+      childList: true,
+      subtree: true,
+    })
+
+    // Initial check in case the DOM is already loaded
+    if (document.readyState === "complete") {
+      callback()
+      observer.disconnect()
+    }
+
+    return () => observer.disconnect()
+  }, [callback])
+}
 
 const ResumePageComp = () => {
+  const [loaded, setLoaded] = useState(false)
+
+  useDOMLoaded(() => {
+    setLoaded(true)
+  })
   const timeLine = gsap.timeline()
   gsap.registerPlugin(ScrollToPlugin)
   const first = () => {
     gsap.from("#kites", {
       y: 0,
-
       duration: 10,
       repeat: -1,
       ease: "elastic.inOut",
@@ -59,7 +87,7 @@ const ResumePageComp = () => {
 
   useEffect(() => {
     first()
-  }, [])
+  }, [loaded])
 
   const handleScroll = (divName) => {
     const ele = document.getElementById(divName)
@@ -82,6 +110,15 @@ const ResumePageComp = () => {
     const nextIndex = (currentIndex + 1) % backgrounds.length
     setCurrentBg(backgrounds[nextIndex])
   }
+
+  if (!loaded) {
+    return (
+      <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
+        <GlobalLoader />
+      </div>
+    )
+  }
+
   return (
     <div
       style={{
@@ -100,38 +137,33 @@ const ResumePageComp = () => {
           background:
             "radial-gradient(circle, rgba(0,33,36,1) 0%, rgba(114,121,9,0.4314058875503326) 35%, rgba(227,255,0,1) 100%)",
         }}
+        title="switch to night mode"
       >
-        {currentBg.includes("jpg") && <h1 className="text-black">enter</h1>}
-
-        <Image
+        <img
           src={"/model/resume_assets/bulb_on.png"}
           width={100}
           height={100}
           alt="sdfsdf"
         />
-
-        {currentBg.includes("jpg") && (
-          <h1 className="text-black">night mode</h1>
-        )}
       </button>
 
-      <div>
-        <Image
+      <div className="-z-50">
+        <img
           src={"/model/resume_assets/wind_mill.png"}
           width={200}
           height={200}
           alt="sdfsdf"
-          className=" "
+          className="absolute top-1/2 scale-50 "
           id="wind_mill"
         />
       </div>
-      <div>
-        <Image
+      <div className="-z-50">
+        <img
           src={"/model/resume_assets/kites.png"}
           width={200}
           height={200}
           alt="sdfsdf"
-          className="absolute  right-0"
+          className="absolute  right-0  top-1/2 scale-50 "
           id="kites"
         />
       </div>
@@ -151,13 +183,11 @@ const ResumePageComp = () => {
           onClick={() => handleScroll("roles")}
         >
           <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-              PROJECTS
-              <br />
-              and
-              <br />
-              INDUSTRIES
-            </h1>
+            PROJECTS
+            <br />
+            and
+            <br />
+            INDUSTRIES
           </h1>
         </div>
         <div
@@ -182,13 +212,13 @@ const ResumePageComp = () => {
           className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
           id="board"
         >
-          <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
-            PROJECTS
-            <br />
-            and
-            <br />
-            INDUSTRIES
-          </h1>
+          <a href="/model/resume_assets/resume.pdf" download>
+            <h1 className="text-black relative top-1/2 font-pencilFont font-semibold  text-center tracking-widest text-2xl  ">
+              DOWNLOAD RESUME
+              <br />
+              PDF
+            </h1>
+          </a>
         </div>
         <div
           className=" cursor-pointer max-h-64 min-w-60 text-left bg-center bg-cover bg-[url('/model/resume_assets/board.png')]  "
@@ -227,7 +257,7 @@ const ResumePageComp = () => {
       <div id="about">
         <AboutMe />
       </div>
-      <div id="roles">
+      <div id="roles" className="z-40 relative">
         <MyRoles />
       </div>
       <div id="techStack">

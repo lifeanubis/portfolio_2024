@@ -25,20 +25,22 @@ import * as CANNON from "cannon-es"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import gsap from "gsap"
 import { useRouter } from "next/navigation"
+import GlobalLoader from "@/Components/globalLoader"
 
 const SolarSystemModule = () => {
-  const [loader, setloader] = useState(false)
+  // const [loader, setloader] = useState(false)
   const [prompt, setPrompt] = useState(false)
+  const [modalLoaded, setModalLoaded] = useState(false)
 
   const router = useRouter()
   const rendererRef = useRef(null)
   const animationIdRef = useRef(null)
-  let scene, group, canvas, renderer
+  let scene, group, canvas, renderer, holder
   const audioRef = useRef(null)
 
-  setTimeout(() => {
-    setloader(true)
-  }, 4000)
+  // setTimeout(() => {
+  //   setloader(true)
+  // }, 4000)
   const threeUi = () => {
     if (
       typeof window !== "undefined" &&
@@ -49,8 +51,7 @@ const SolarSystemModule = () => {
       sunMesh &&
       earthMesh &&
       saturnMesh &&
-      portalMesh &&
-      loader === true
+      portalMesh
     ) {
       const width = window.innerWidth
       const height = window.innerHeight
@@ -76,9 +77,6 @@ const SolarSystemModule = () => {
       document.body.appendChild(renderer.domElement)
 
       const controls = new OrbitControls(camera, renderer.domElement)
-
-      const pointLight = new THREE.PointLight(0xff09107, 1, 0, 0)
-      const pointLightStar = new THREE.PointLight("cyan", 15, 10, 0)
 
       const ambientLight = new THREE.AmbientLight("white", 1)
 
@@ -200,16 +198,16 @@ const SolarSystemModule = () => {
         group.add(innerPortalMesh)
 
         world.addBody(saturnBody)
-        marsMesh.position.set(-200, 0, -15)
+        marsMesh.position.set(-300, 0, -15)
         sunMesh.position.set(0, 0, 4)
-        portalMesh.position.set(-180, 0, 0)
+        portalMesh.position.set(-500, 0, 0)
         portalMesh.rotation.set(0, -Math.PI / 2, 0)
 
-        innerPortalMesh.position.set(-180, 0, 0)
+        innerPortalMesh.position.set(-500, 0, 0)
         innerPortalMesh.rotation.set(0, -Math.PI / 2, 0)
 
-        earthMesh?.position.set(100, 0, 0)
-        saturnBody.position.set(200, 0, 50)
+        earthMesh?.position.set(300, 0, 0)
+        saturnBody.position.set(400, 0, 50)
       }
       ambientLight.position.set(-25, 0, 0)
       // group.children[0].add(ambientLight)
@@ -223,58 +221,70 @@ const SolarSystemModule = () => {
       const directional = new THREE.DirectionalLight(0xeb9c50, 10)
       const directionalZ = new THREE.DirectionalLight(0xeb9c50, 2)
 
-      loader.load("./model/spaceShip/scene.gltf", (gltf) => {
-        model = gltf.scene
-        model.add(directional)
-        model.add(directionalZ)
+      loader.load(
+        "./model/spaceShip/scene.gltf",
+        (gltf) => {
+          model = gltf.scene
+          model.add(directional)
+          model.add(directionalZ)
 
-        directional.position.set(300, 200, 0)
-        directionalZ.position.set(0, 0, -200)
-        model.position.x = 600
-        model.scale.set(0.02, 0.02, 0.02)
-        group.add(model)
-        timeLine
-          .to(model.rotation, {
-            y: 3.2,
-            delay: 2,
-            duration: 3.0,
-          })
-          .to(camera.position, {
-            y: 40,
-            duration: 4.0,
-          })
-          .to(camera.position, {
-            y: 10,
-            x: 610,
-            z: 1,
-            duration: 4.0,
-          })
-          .add("start")
-          .to(
-            model.position,
-            {
-              x: -40,
-              duration: 15.0,
-            },
-            "start"
-          )
-          .to(
-            camera.position,
-            {
-              x: 40,
-              duration: 17.0,
-            },
-            "start"
-          )
-          .to(camera.position, {
-            x: 0,
-            y: 60,
-            z: 170,
-            duration: 20.0,
-          })
-      })
-
-      const shipMoveControlls = () => {}
+          directional.position.set(300, 200, 0)
+          directionalZ.position.set(0, 0, -200)
+          model.position.x = 600
+          model.scale.set(0.02, 0.02, 0.02)
+          group.add(model)
+          timeLine
+            .to(model.rotation, {
+              y: 3.2,
+              delay: 1,
+              duration: 1.0,
+            })
+            .to(camera.position, {
+              y: 40,
+              duration: 2.0,
+            })
+            .to(camera.position, {
+              y: 10,
+              x: 610,
+              z: 1,
+              duration: 2.0,
+            })
+            .add("start")
+            .to(
+              model.position,
+              {
+                x: -40,
+                duration: 5.0,
+              },
+              "start"
+            )
+            .to(
+              camera.position,
+              {
+                x: 40,
+                duration: 7.0,
+              },
+              "start"
+            )
+            .to(camera.position, {
+              x: 0,
+              y: 60,
+              z: 170,
+              duration: 10.0,
+            })
+        },
+        (xhr) => {
+          // Progress callback
+          if (xhr.loaded) {
+            setModalLoaded(true)
+          }
+          // console.log(`Model loading progress: ${}`)
+        },
+        (error) => {
+          // Error callback
+          console.error("An error occurred while loading the model:", error)
+        }
+      )
 
       /////////////////// ship render
       document.addEventListener("keydown", (event) => {
@@ -289,6 +299,10 @@ const SolarSystemModule = () => {
             break
         }
       })
+
+      holder = () => {
+        model.position.x -= step // Move model backward
+      }
       // const axisHelper = new THREE.AxesHelper(200)
 
       // scene.add(axisHelper)
@@ -380,8 +394,7 @@ const SolarSystemModule = () => {
       sunMesh &&
       earthMesh &&
       saturnMesh &&
-      portalMesh &&
-      loader === true
+      portalMesh
     ) {
       router.prefetch("/projects")
 
@@ -396,7 +409,7 @@ const SolarSystemModule = () => {
         console.log("Three.js scene cleaned up.")
       }
     }
-  }, [loader])
+  }, [modalLoaded])
   let playTimeout
   const playAudioSnippet = (start, end) => {
     if (audioRef.current) {
@@ -412,33 +425,62 @@ const SolarSystemModule = () => {
   }
   useEffect(() => {
     playAudioSnippet(1, 20)
-  }, [loader])
+  }, [modalLoaded])
 
   setTimeout(() => {
     setPrompt(true)
   }, 40000)
 
-  if (loader === false) {
+  if (!modalLoaded || !sunMesh) {
     return (
-      <h1 className="bg-black w-full h-screen glow-text text-sky-500  font-bold flex justify-center pt-52  text-4xl ">
-        loading.... assets
-      </h1>
+      <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
+        <GlobalLoader />
+      </div>
     )
   }
 
-  if (loader === true) {
+  if (modalLoaded === true) {
     return (
       <>
         <audio autoPlay loop>
           <source src="/sounds/space.mp3" type="audio/mp3" />
         </audio>
-        {prompt && (
-          <div className="absolute top-20 right-0 btn-glow-yes ">
-            <p className="text-white font-bold tracking-widest">
-              click up arrow key to enter portal
-            </p>
+        <div className="absolute top-20 right-0 ">
+          <div className="text-sm   right-0 w-full  flex gap-10  justify-end">
+            <button
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-3 rounded-full text-black hover:scale-75 font-bold duration-300  "
+              onClick={() => audioRef.current.play()}
+            >
+              Play audio
+            </button>
+            <button
+              style={{
+                background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+              }}
+              className="p-3 rounded-full text-black hover:scale-75 font-bold duration-300  "
+              onClick={() => stopAudio()}
+            >
+              Stop Audio
+            </button>
+
+            {prompt && (
+              <div className="">
+                <button
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
+                  }}
+                  className="p-3 text-xs rounded-full text-black hover:scale-75 font-bold duration-300  "
+                >
+                  hold <br /> UP ARROW <br /> to enter portal
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </>
     )
   }

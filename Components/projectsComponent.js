@@ -18,10 +18,14 @@ import {
   CSS2DObject,
   CSS2DRenderer,
 } from "three/addons/renderers/CSS2DRenderer.js"
+import Image from "next/image"
+import GlobalLoader from "./globalLoader"
 
 const ProjectComponent = () => {
   const rendererRef = useRef(null)
   const cssRendererRef = useRef(null)
+  const [modelLoaded, setModelLoaded] = useState(false)
+  const [screenSize, setScreenSize] = useState(768)
 
   const animationIdRef = useRef(null)
   let scene, group, canvas, renderer, cssRenderer, container
@@ -96,7 +100,10 @@ const ProjectComponent = () => {
         console.log("Model loaded successfully:", object)
       },
       (xhr) => {
-        console.log(`Loading progress: ${(xhr.loaded / xhr.total) * 100}%`)
+        // console.log(`Loading progress: ${xhr}%`)
+        if (xhr.loaded) {
+          setModelLoaded(true)
+        }
       },
       (error) => {
         console.error("An error occurred while loading the model:", error)
@@ -166,18 +173,13 @@ const ProjectComponent = () => {
     document.body.appendChild(cssRenderer.domElement)
 
     const addIframes = (iframePosX, iframePosY, iframePosZ, iframeUrl) => {
-      const iframeGeometry = new THREE.PlaneGeometry(10, 10)
-      const iframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0x00ff00,
-        side: 2,
-      })
       const iframe = document.createElement("iframe")
       iframe.src = iframeUrl
       iframe.style.border = "none"
       iframe.style.width = "100%"
       iframe.style.height = "100vh"
       iframe.style.transformOrigin = "0 0"
-      iframe.style.transform = "scale(0.2)"
+      iframe.style.transform = "scale(0.35)"
       iframe.style.pointerEvents = "auto"
       iframe.style.backgroundColor = "purple"
       iframe.style.padding = "10px"
@@ -199,10 +201,22 @@ const ProjectComponent = () => {
     scene.add(iframeGroup)
 
     addIframes(0, 2, -10, "https://laughing-hugle-9d2e60.netlify.app/")
-    addIframes(28, 2, -10, "https://www.nattyhatty.com/")
-    addIframes(28, -9, -10, "https://www.fpslounge.com/")
-    addIframes(0, -9, -10, "https://mern-cms.netlify.app/")
+    addIframes(21, 2, -10, "https://www.nattyhatty.com/")
+    addIframes(21, -7, -10, "https://www.fpslounge.com/")
+    addIframes(0, -7, -10, "https://mern-cms.netlify.app/")
 
+    let targetX = 0
+    let targetY = 0
+    let currentX = 0
+    let currentY = 0
+
+    // Track cursor position
+    document.addEventListener("mousemove", (event) => {
+      // Convert cursor position to 3D space coordinates
+      targetX = (event.clientX / window.innerWidth) * 2 - 1
+      targetY = -(event.clientY / window.innerHeight) * 2 + 1
+    })
+    const smoothness = 0.05 // Adjust f
     controls.enableDamping = true
     controls.dampingFactor = 0.009
     controls.enableRotate = false
@@ -220,11 +234,20 @@ const ProjectComponent = () => {
         const t = (elapsedTime % 1) / 1 // Normalized time between 0 and 1 every second
 
         if (objModel) {
-          // objModel.rotation.x = Math.sin((elapsedTime / 10) * Math.PI)
+          objModel.rotation.x = Math.sin((elapsedTime / 10) * Math.PI)
           objModel.rotation.y = Math.cos((elapsedTime / 10) * Math.PI)
           objModel.rotation.z = Math.cos((elapsedTime / 10) * Math.PI)
           objModel.position.x = Math.sin((elapsedTime / 10) * Math.PI * 2)
           objModel.position.y = Math.cos((elapsedTime / 10) * Math.PI * 2)
+          // Smooth movement
+          currentX += (targetX - currentX) * smoothness
+          currentY += (targetY - currentY) * smoothness
+
+          // Update cube position
+          objModel.position.x = currentX * 30 // Multiply by 3 to increase movement range
+          objModel.position.y = currentY * 20
+          objModel.rotation.x = currentX * 5 // Multiply by 3 to increase movement range
+          objModel.rotation.y = currentY * 5
         }
         // Compute the RGB values for the smooth transition
         const r = Math.floor((Math.sin(t * Math.PI * 2) * 0.5 + 0.5) * 255)
@@ -249,8 +272,13 @@ const ProjectComponent = () => {
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (window.screen.availWidth > 768) {
+      setScreenSize(window.screen.availWidth)
+    }
+
+    if (typeof window !== "undefined" && window.screen.availWidth > 786) {
       threeUi()
+
       return () => {
         cancelAnimationFrame(animationIdRef.current) // Stop animation
 
@@ -264,6 +292,196 @@ const ProjectComponent = () => {
       }
     }
   }, [])
+
+  useEffect(() => {
+    gsap.to("#rotater2", {
+      rotateX: "-360",
+      duration: 7,
+      repeat: -1,
+      yoyo: true,
+      ease: "expo",
+    })
+    gsap.to("#rotater1", {
+      rotateX: "-360",
+      duration: 5,
+      repeat: -1,
+      ease: "none",
+    })
+  }, [])
+
+  if (screenSize > 768 && !modelLoaded) {
+    return (
+      <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
+        <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
+          <GlobalLoader />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-1  lg:hidden absolute bg-black text-white overflow-scroll h-[99vh] w-full pb-20 pt-5  gap-10 object-center justify-center place-items-center ">
+      <div className="bg-green-800 w-full h-60 relative ">
+        <div className="bg-green-800 absolute col-span-1 w-full h-60 ">
+          <div
+            className="bg-purple-800 text-lg col-span-1  absolute w-full h-full "
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <Image
+              src={"/model/resume_assets/natty_sc.png"}
+              width={300}
+              height={300}
+              alt="asdasd"
+              className="w-full h-full"
+            />
+          </div>
+          <div
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+            id="rotater2"
+            className="bg-gradient-to-r from-orange-900 to-black text-lg absolute col-span-1 w-full h-full text-center place-content-center "
+          >
+            <div>
+              {" "}
+              <p> Natty Hatty is a sports management platform </p>{" "}
+            </div>
+            <a
+              href="https://www.nattyhatty.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="text-black bg-gradient-to-tr cursor-pointer from-teal-500 to-sky-700 tracking-widest  p-2 rounded-lg hover:scale-75 duration-500">
+                {" "}
+                visit nattyhatty{" "}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green-800 w-full h-60 relative ">
+        <div className="bg-green-800 absolute col-span-1 w-full h-60 ">
+          <div
+            className="bg-purple-800 text-lg col-span-1  absolute w-full h-full "
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <Image
+              src={"/model/resume_assets/fps_sc.png"}
+              width={300}
+              height={300}
+              alt="asdasd"
+              className="w-full h-full"
+            />
+          </div>
+          <div
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+            id="rotater1"
+            className="bg-gradient-to-r from-orange-900 to-black text-lg absolute col-span-1 w-full h-full text-center place-content-center "
+          >
+            <div>
+              {" "}
+              <p> fps lounge is an e-sports solutions platform </p>{" "}
+            </div>
+            <a
+              href="https://www.fpslounge.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="text-black bg-gradient-to-tr cursor-pointer from-teal-500 to-sky-700 tracking-widest  p-2 rounded-lg hover:scale-75 duration-500">
+                visit fpslounge{" "}
+              </div>
+            </a>
+            {/* <div></div> */}
+          </div>
+        </div>
+      </div>
+      <div className="bg-green-800 w-full h-60 relative ">
+        <div className="bg-green-800 absolute col-span-1 w-full h-60 ">
+          <div
+            className="bg-purple-800 text-lg col-span-1  absolute w-full h-full "
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <Image
+              src={"/model/resume_assets/3d_sc.png"}
+              width={300}
+              height={300}
+              alt="asdasd"
+              className="w-full h-full"
+            />
+          </div>
+          <div
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+            id="rotater2"
+            className="bg-gradient-to-r from-orange-900 to-black text-lg absolute col-span-1 w-full h-full text-center place-content-center "
+          >
+            <div>
+              {" "}
+              <p> demo project for 3D illustration </p>{" "}
+            </div>
+            <a
+              href="https://www.aughing-hugle-9d2e60.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="text-black bg-gradient-to-tr cursor-pointer from-teal-500 to-sky-700 tracking-widest  p-2 rounded-lg hover:scale-75 duration-500">
+                visit haunted house{" "}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="bg-green-800 w-full h-60 relative ">
+        <div className="bg-green-800 absolute col-span-1 w-full h-60 ">
+          <div
+            className="bg-purple-800 text-lg col-span-1  absolute w-full h-full "
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <Image
+              src={"/model/resume_assets/cms_sc.png"}
+              width={300}
+              height={300}
+              alt="asdasd"
+              className="w-full h-full"
+            />
+          </div>
+          <div
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+            id="rotater1"
+            className="bg-gradient-to-r from-orange-900 to-black text-lg absolute col-span-1 w-full h-full text-center place-content-center "
+          >
+            <div>
+              {" "}
+              <p> demo CMS portal with plugins functionality </p>{" "}
+            </div>
+            <a
+              href="https://mern-cms.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="text-black bg-gradient-to-tr cursor-pointer from-teal-500 to-sky-700 tracking-widest  p-2 rounded-lg hover:scale-75 duration-500">
+                visit CMS{" "}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default ProjectComponent

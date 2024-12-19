@@ -16,7 +16,7 @@ if (typeof window !== "undefined") {
       map: texture,
     })
     jupiterMesh = new THREE.Mesh(jupiterGeometry, jupiterMaterial)
-    jupiterMesh.position.set(100, 0, -100)
+    jupiterMesh.position.set(-700, 0, -200)
   })
 }
 export { jupiterMesh, jupiterMaterial, jupiterGeometry }

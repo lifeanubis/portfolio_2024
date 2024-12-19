@@ -53,12 +53,12 @@ const ContactMe = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3  place-items-center xl:place-items-stretch place-content-around gap-52  ">
+      <div className="grid grid-cols-3  xl:justify-start xl:place-content-start xl:place-items-start xl:place-self-start  place-content-center place-items-center   xl:gap-72  ">
         <a
           href="https://www.linkedin.com/in/shreyansh-sharma-3386621b2"
           target="_blank"
         >
-          <div className="cursor-pointer   scale-75 xl:scale-100  w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
+          <div className="cursor-pointer   scale-50 xl:scale-100  w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
             <img
               width={100}
               height={100}
@@ -69,7 +69,7 @@ const ContactMe = () => {
           </div>
         </a>
         <a href="https://github.com/lifeanubis" target="_blank">
-          <div className="cursor-pointer scale-75 xl:scale-100 w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
+          <div className="cursor-pointer scale-50 xl:scale-100 w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
             <img
               width={100}
               height={100}
@@ -83,7 +83,7 @@ const ContactMe = () => {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=code.shreyansh@gmail.com"
           target="_blank"
         >
-          <div className="cursor-pointer scale-75 xl:scale-100 w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
+          <div className="cursor-pointer scale-50 xl:scale-100 w-60 h-60 items-center flex justify-center top-0 bg-center bg-cover bg-[url('/model/resume_assets/direction.png')]">
             <img
               width={100}
               height={100}

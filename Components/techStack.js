@@ -59,54 +59,58 @@ const TechStack = () => {
   ]
 
   useEffect(() => {
-    let speed = screenSize < 768 ? 1 : 2 // Pixels per second
+    let speed = screenSize <= 768 ? 1 : 2 // Pixels per second
 
     // console.log(window.screen.availWidth, "----------")
     setScreenSize(window.screen.availWidth)
     const popoMo = (ele) => {
-      gsap.to(`#popoMo${ele} p`, {
-        scale: 2,
-        duration: 2.0,
-        opacity: 1,
-        backgroundColor: "black",
-        background: "rgb(2,0,36)",
-        background:
-          "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(121,9,101,0) 35%, rgba(0,212,255,1) 100%)",
-        borderRadius: "25px",
-      })
-      gsap.to(`#popoMo${ele} img`, {
-        scale: 2,
-        duration: 2.0,
-      })
-      gsap.to(`#popoMo${ele}`, {
-        marginTop: "-7rem",
-      })
+      if (`#popoMo${ele}`) {
+        gsap.to(`#popoMo${ele} p`, {
+          scale: 2,
+          duration: 2.0,
+          opacity: 1,
+          backgroundColor: "black",
+          background: "rgb(2,0,36)",
+          background:
+            "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(121,9,101,0) 35%, rgba(0,212,255,1) 100%)",
+          borderRadius: "25px",
+        })
+        gsap.to(`#popoMo${ele} img`, {
+          scale: 2,
+          duration: 2.0,
+        })
+        gsap.to(`#popoMo${ele}`, {
+          marginTop: "-7rem",
+        })
+      }
     }
 
     const popoMoShrink = (ele) => {
-      gsap.to(`#popoMo${ele} p`, {
-        marginTop: "0px",
-        scale: 1,
-        duration: 2.0,
-        backgroundColor: "transparent",
-        opacity: 0,
-      })
-      gsap.to(`#popoMo${ele} img`, {
-        marginTop: "0px",
-        scale: 1,
-        duration: 2.0,
-        backgroundColor: "transparent",
-      })
-      gsap.to(`#popoMo${ele}`, {
-        marginTop: "0rem",
-      })
+      if (`#popoMo${ele}`) {
+        gsap.to(`#popoMo${ele} p`, {
+          marginTop: "0px",
+          scale: 1,
+          duration: 2.0,
+          backgroundColor: "transparent",
+          opacity: 0,
+        })
+        gsap.to(`#popoMo${ele} img`, {
+          marginTop: "0px",
+          scale: 1,
+          duration: 2.0,
+          backgroundColor: "transparent",
+        })
+        gsap.to(`#popoMo${ele}`, {
+          marginTop: "0rem",
+        })
+      }
     }
     const elements = document.querySelectorAll("#tech_item")
     const positions = Array.from(elements).map(() =>
       screenSize < 768 ? -window.innerWidth * 11 : -window.innerWidth * 3
     )
 
-    gsap.ticker.add(() => {
+    const tickerCallback = () => {
       const delta = gsap.ticker.deltaRatio() // Get frame time delta ratio
 
       elements.forEach((element, index) => {
@@ -128,7 +132,13 @@ const TechStack = () => {
             screenSize < 768 ? -window.innerWidth * 11 : -window.innerWidth * 3
         }
       })
-    })
+    }
+
+    gsap.ticker.add(tickerCallback)
+
+    return () => {
+      gsap.ticker.remove(tickerCallback)
+    }
   }, [screenSize])
 
   return (

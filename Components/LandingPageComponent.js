@@ -7,11 +7,12 @@ import gsap from "gsap"
 
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-
+import GlobalLoader from "@/Components/globalLoader"
 const LandingPageComponent = () => {
   const rendererRef = useRef(null)
   const animationIdRef = useRef(null)
   let scene, group, canvas, renderer
+  const [modalLoaded, setModalLoaded] = useState(false)
 
   const threeUi = () => {
     if (typeof window !== "undefined") {
@@ -54,9 +55,10 @@ const LandingPageComponent = () => {
         },
         (xhr) => {
           // Progress callback
-          console.log(
-            `Model loading progress: ${(xhr.loaded / xhr.total) * 100}%`
-          )
+          if (xhr.loaded) {
+            setModalLoaded(true)
+          }
+          // console.log(`Model loading progress: ${}`)
         },
         (error) => {
           // Error callback
@@ -170,12 +172,8 @@ const LandingPageComponent = () => {
     }
   }
   useEffect(() => {
-    // if (startShow === false) {
-    //   stopAudio()
-    // }
-    // else
     playAudioSnippet(1, 20)
-  }, [startShow])
+  }, [startShow, modalLoaded])
 
   if (startShow === null) {
     return (
@@ -189,7 +187,7 @@ const LandingPageComponent = () => {
             className="absolute overflow-y-hidden  -left-44 w-[33vw] h-screen  scale-150   "
           />
         </div>
-        <div className="text-center mt-10 place-self-center gap-10 text-white font-bold  grid grid-cols-1">
+        <div className="text-center lg:text-lg text-sm mt-10 place-self-center gap-10 text-white font-bold  grid grid-cols-1">
           <div
             className="w-full  p-10  text-black/60 rounded-lg  "
             style={{
@@ -209,6 +207,7 @@ const LandingPageComponent = () => {
               className="p-10 rounded-full hover:scale-75 text-black/60 duration-300"
               onClick={() => {
                 setStartShow(true)
+                audioRef.current.play()
               }}
             >
               YES
@@ -223,8 +222,6 @@ const LandingPageComponent = () => {
               onClick={() => {
                 setStartShow(false)
                 audioRef.current.pause()
-
-                // stopAudio()
               }}
             >
               NO{" "}
@@ -235,7 +232,15 @@ const LandingPageComponent = () => {
     )
   }
 
-  if (startShow !== null) {
+  if (startShow !== null && !modalLoaded) {
+    return (
+      <div className="grid grid-cols-1  bg-black text-white h-screen w-full place-content-center items-center place-items-center">
+        <GlobalLoader />
+      </div>
+    )
+  }
+
+  if (startShow !== null && modalLoaded) {
     return (
       <div className=" absolute w-screen h-screen  overflow-hidden ">
         <Image
@@ -247,7 +252,7 @@ const LandingPageComponent = () => {
         />
         <div className="w-full  grid grid-cols-1  text-white p-5 ">
           <div>
-            <h1 className="text-4xl tracking-widest  leading-10 glow-text font-bold  w-full h-full flex justify-end">
+            <h1 className="lg:text-3xl text-xl tracking-widest  leading-10 glow-text font-bold  w-full h-full flex justify-end">
               {alterText}
             </h1>
           </div>
@@ -255,7 +260,7 @@ const LandingPageComponent = () => {
           <audio ref={audioRef}>
             <source src="/sounds/typing.mp3" type="audio/mp3" />
           </audio>
-          <div className="text-lg font text-white right-0 w-full  flex gap-10 mt-16 justify-end">
+          <div className="lg:text-lg text-sm font text-white right-0 w-full  flex gap-10 mt-16 justify-end">
             <button
               style={{
                 background: "linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%)",
