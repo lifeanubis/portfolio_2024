@@ -3,7 +3,11 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { useRouter } from "next/navigation"
 import NavBarPc from "@/Components/NavBarPc"
-import NavBarMobile from "@/Components/navbarMobile"
+import dynamic from "next/dynamic"
+
+const NavBarMobile = dynamic(() => import("@/Components/navbarMobile"), {
+  ssr: false,
+})
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

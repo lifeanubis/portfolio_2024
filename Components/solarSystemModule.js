@@ -35,7 +35,7 @@ const SolarSystemModule = () => {
   const router = useRouter()
   const rendererRef = useRef(null)
   const animationIdRef = useRef(null)
-  let scene, group, canvas, renderer, holder
+  let scene, group, canvas, renderer
   const audioRef = useRef(null)
 
   // setTimeout(() => {
@@ -300,9 +300,6 @@ const SolarSystemModule = () => {
         }
       })
 
-      holder = () => {
-        model.position.x -= step // Move model backward
-      }
       // const axisHelper = new THREE.AxesHelper(200)
 
       // scene.add(axisHelper)

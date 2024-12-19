@@ -14,25 +14,26 @@ import GlobalLoader from "./globalLoader"
 
 const useDOMLoaded = (callback) => {
   useEffect(() => {
-    const observer = new MutationObserver((mutations, observer) => {
+    if (typeof window !== "undefined") {
+      const observer = new MutationObserver((mutations, observer) => {
+        if (document.readyState === "complete") {
+          callback()
+          observer.disconnect()
+        }
+      })
+
+      observer.observe(document, {
+        childList: true,
+        subtree: true,
+      })
+
+      // Initial check in case the DOM is already loaded
       if (document.readyState === "complete") {
         callback()
         observer.disconnect()
       }
-    })
-
-    observer.observe(document, {
-      childList: true,
-      subtree: true,
-    })
-
-    // Initial check in case the DOM is already loaded
-    if (document.readyState === "complete") {
-      callback()
-      observer.disconnect()
+      return () => observer.disconnect()
     }
-
-    return () => observer.disconnect()
   }, [callback])
 }
 

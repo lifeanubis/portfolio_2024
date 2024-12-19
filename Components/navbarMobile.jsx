@@ -1,8 +1,9 @@
 "use client"
+
 import "@lottiefiles/dotlottie-wc"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 export default function NavBarMobile({}) {
   const router = usePathname()
