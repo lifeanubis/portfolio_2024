@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 export default function NavBarMobile({}) {
   const router = usePathname()
   return (
-    <div className=" text-white w-full relative  tracking-widest  h-full   p-4 bg-gradient-to-r from-gray-900 to-black  grid grid-cols-4  place-items-center">
+    <div className=" text-white w-full relative  tracking-widest     p-7  bg-gradient-to-r from-gray-900 to-black  grid grid-cols-4  place-items-center">
       <div className="   ">
         <Link href={"/landing"}>
           <div
