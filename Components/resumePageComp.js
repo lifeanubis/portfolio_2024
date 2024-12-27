@@ -134,7 +134,7 @@ const ResumePageComp = () => {
           backgroundImage: `url(${currentBg})`,
           transition: "background 2s",
         }}
-        className="w-full   text-white max-h-[90vh]  2xl:max-h-[92vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
+        className="w-full   text-white max-h-[88vh]  2xl:max-h-[92vh]  bg-center bg-cover  overflow-y-scroll overflow-x-hidden  transition-transform duration-500 ease-in-out"
       >
         <button
           onClick={handleBackgroundChange}
